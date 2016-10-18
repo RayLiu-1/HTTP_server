@@ -27,7 +27,6 @@ int set_config();
 
 int main(int argc, char *argv[])
 {
-	int 
 	if (set_config()==0)
 	{
 		perror("set config error");
@@ -41,9 +40,9 @@ int main(int argc, char *argv[])
 int set_config()
 {
 	FILE *fp;
-	fp = fopen("ws.conf", r);
+	fp = fopen("ws.conf", "r");
 	char readBuf[200];
-	while (fgets(readBuf,200,(FILE*) fp) {
+	while (fgets(readBuf,200,(FILE*) fp)) {
 		if(readBuf[0]=='#')
 			continue
 		else {
