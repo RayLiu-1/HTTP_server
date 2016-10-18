@@ -49,8 +49,8 @@ int set_config()
 			char * pch;
 			pch = strtok(readBuf," ");
 			if (strcmp(pch, "ListenPort") == 0) {
-				ListenPort = atoi(Listen);
-				fputs(ListenPort);
+				ListenPort = atoi(pch);
+				puts(ListenPort);
 			}
 		}
 	}
