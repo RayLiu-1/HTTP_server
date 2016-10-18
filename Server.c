@@ -50,7 +50,7 @@ int set_config()
 			char * pch;
 			pch = strtok(readBuf," ");
 			if (strcmp(pch, "Listen") == 0) {
-				pch = strtok(readBuf, " ");
+				pch = strtok(NULL, " ");
 				ListenPort = atoi(pch);
 				printf("%d\n", ListenPort);
 			}
