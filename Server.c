@@ -43,8 +43,8 @@ int set_config()
 	fp = fopen("ws.conf", "r");
 	char readBuf[200];
 	while (fgets(readBuf,200,(FILE*) fp)) {
-		if(readBuf[0]=='#')
-			continue
+		if (readBuf[0] == '#')
+			continue;
 		else {
 			char * pch;
 			pch = strtok(readBuf," ");
