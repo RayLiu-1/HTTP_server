@@ -42,15 +42,17 @@ int set_config()
 	FILE *fp;
 	fp = fopen("ws.conf", "r");
 	char readBuf[200];
+	puts("open");
 	while (fgets(readBuf,200,(FILE*) fp)) {
 		if (readBuf[0] == '#')
 			continue;
 		else {
 			char * pch;
 			pch = strtok(readBuf," ");
-			if (strcmp(pch, "ListenPort") == 0) {
+			if (strcmp(pch, "Listen") == 0) {
+				pch = strtok(readBuf, " ");
 				ListenPort = atoi(pch);
-				puts(ListenPort);
+				printf("%d\n", ListenPort);
 			}
 		}
 	}
