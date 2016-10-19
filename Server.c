@@ -17,8 +17,7 @@
 #define BUFSIZE 4096
 #define QUESIZE 4// maximum number of client connections
 int ListenPort;
-char DocumentRoot[400];
-char DirectoryIndex[100];
+char DocumentRoot[200];
 char WebPage[10][100];
 char ContentType[20][2][100];
 int KeepaliveTime ;
@@ -89,15 +88,51 @@ void *connection_handler(void *sockfd) {
 		n = recv(cnfd, buf, BUFSIZE, 0);
 		//pch = strtok(buf)
 		printf("%d\n", n);
-		if (n == 0) {
+		if (n == -1) {
+			puts("Time out");
+			fflush(stdout);
 			break;
 		}
+		if (n == 0) {
+			puts("Client disconnected");
+			fflush(stdout);
+			break;
+		}
+		pch = strtok(buf,"/ ");
+		char filepath[200];
+		char filename[100];
+		char HTTP
+		if (strcmp(pch, "GET") == 0 ) {
+			pch = strtok(NULL, " ");
+			if (strlen(pch) == 0 or pch[0] != '/') {
+				buf = "HTTP/1.1 400 Bad Request\n<!DOCTYPE html>\n<html><body>400 Bad Request Reason: Invalid URL: <<reqested url>></body></html>\r";
+				write(cnfd, buf, strlen(buf));
+				continue;
+			}
+			else if (strlen(pch) != 0 && pch[strlen(pch) - 1] == '/')
+			{
+				strcpy(filepath, DocumentRoot);
+				strcat(filepath, "/");
+				strcat(filepath, WebPage[0]);
+			}
+			else{
+				strcpy(filepath, DocumentRoot);
+				strcat(filepath, pch);
+			}
+			pch = strtok(NULL, " ");
+			if (strcmp(pch, "HTTP/1.1") != 0 && strcmp(pch, "HTTP/1.0") != 0) {
+				buf = "HTTP/1.1 400 Bad Request\n<!DOCTYPE html>\n<html><body>400 Bad Request Reason: Invalid HTTP-Version: <<req version>></body></html>\r";
+				write(cnfd, buf, strlen(buf));
+			}
+			else {
+				buf = "";
+				if (strcmp(pch, "HTTP/1.1") == 0) {
+					buf = "HTTP/1.1 404 Not Found\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :<<requested url>></body></html>\r"
+				}
+			}
+		}
 	} while (1); 
-	if (n == 0) {
-		puts("Client disconnected");
-		fflush(stdout);
-	}
-	//if ()
+	
 	free(sockfd);
 	return 0;
 }
