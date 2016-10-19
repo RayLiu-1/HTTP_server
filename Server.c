@@ -92,7 +92,7 @@ void *connection_handler(void *sockfd) {
 		if (n == 0) {
 			break;
 		}
-	} while (pipeline); 
+	} while (1); 
 	if (n == 0) {
 		puts("Client disconnected");
 		fflush(stdout);
