@@ -7,7 +7,7 @@
 #include <sys/errno.h>
 #include <netinet/in.h>
 #include <netdb.h>
-
+#include <pthread.h>
 #include <stdarg.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -43,8 +43,8 @@ int main(int argc, char *argv[])
 	puts("Socket created");
 
 	//set socket address
-	server.sin_family = AF.INET;
-	server.sin_addr.s_addr = INARRY_ANY;
+	server.sin_family = AF_INET;
+	server.sin_addr.s_addr = INADDY_ANY;
 	server.sin_port = htons(ListenPort);
 	if (bind(lsfd, (struct sockaddr *)&server, sizeof(server)) < 0){
 		perror("Bind failed");
@@ -53,9 +53,9 @@ int main(int argc, char *argv[])
 	puts("Socket bind");
 
 	//Listen
-	Listen(lsfd, QUESIZE);
+	listen(lsfd, QUESIZE);
 	puts("Listenning...");
-	while (cnfd = accept(lsfd, (struct sockaddr *)&client, sizeof(client)) < 0) {
+	while (cnfd = accept(lsfd, (struct sockaddr *)&client, (socklen_t*) sizeof(client)) < 0) {
 		puts("connection appected");
 		int* pfd = (int*)malloc(sizeof(int));
 		*pfd = cnfd;
@@ -66,11 +66,12 @@ int main(int argc, char *argv[])
 			return 1;
 		}
 	}
-	perror("accept failed")
+	perror("accept failed");
 	return 0;
 }
 
 void *connection_handler(void *sockfd) {
+	bool pipeline = 0;
 	do {
 		int cnfd = *(int*)sockfd;
 		int n = 0;
@@ -78,14 +79,14 @@ void *connection_handler(void *sockfd) {
 		while ((n = recv(cnfd, buf, BUFSIZE, 0)) > 0)
 		{
 			//Send the message back to client
-			put("buf");
+			puts("buf");
 		}
 		if (n == 0) {
 			puts("Client disconnected");
 			fflush(stdout);
 		}
-		free(socket_desc);	
-	}
+		free(cnfd);
+	}while(pipeline)
 	return 0;
 }
 
@@ -94,7 +95,7 @@ int set_config()
 	FILE *fp;
 	fp = fopen("ws.conf", "r");
 	if (fp == NULL) {
-		pritf
+		perror("failed file opening");
 	}
 	if (fp) {
 		return 1;
@@ -121,9 +122,9 @@ int set_config()
 			}
 			else if (strcmp(pch, "DirectoryIndex") == 0) {
 				pch = strtok(NULL, "");
-				strcpy(webPage[nIndex++], pch);
+				strcpy(WebPage[nIndex++], pch);
 			}
-			else if (pch[0] == ".") {
+			else if (pch[0] == '.') {
 				strcpy(ContentType[ntype++][0], pch+1);
 				pch = strtok(NULL, "");
 				strcpy(ContentType[ntype++][1], pch);
