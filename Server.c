@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
 }
 
 void *connection_handler(void *sockfd) {
-	bool pipeline = 0;
+	int pipeline = 0;
 	do {
 		int cnfd = *(int*)sockfd;
 		int n = 0;
@@ -85,8 +85,8 @@ void *connection_handler(void *sockfd) {
 			puts("Client disconnected");
 			fflush(stdout);
 		}
-		free(cnfd);
-	}while(pipeline)
+	} while (pipeline);
+	free(sockfd);
 	return 0;
 }
 
@@ -118,7 +118,7 @@ int set_config()
 			}
 			else if (strcmp(pch, "DocumentRoot")==0) {
 				pch = strtok(NULL, "");
-				strcpy(DocumentRoot ,pch)
+				strcpy(DocumentRoot, pch);
 			}
 			else if (strcmp(pch, "DirectoryIndex") == 0) {
 				pch = strtok(NULL, "");
