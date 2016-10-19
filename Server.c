@@ -55,7 +55,8 @@ int main(int argc, char *argv[])
 	//Listen
 	listen(lsfd, QUESIZE);
 	puts("Listenning...");
-	while (cnfd = accept(lsfd, (struct sockaddr *)&client, (socklen_t*) &sizeof(client))) {
+	int csize = sizeof(client);
+	while (cnfd = accept(lsfd, (struct sockaddr *)&client, (socklen_t*) &csize)) {
 		puts("connection appected");
 		int* pfd = (int*)malloc(sizeof(int));
 		*pfd = cnfd;
