@@ -77,7 +77,7 @@ void *connection_handler(void *sockfd) {
 		int cnfd = *(int*)sockfd;
 		int n = 0;
 		char buf[BUFSIZE];
-		do(){
+		do{
 			//Send the message back to client
 			n = recv(cnfd, buf, BUFSIZE, 0);
 			puts(buf);
