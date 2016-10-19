@@ -80,6 +80,7 @@ void *connection_handler(void *sockfd) {
 	int cnfd = *(int*)sockfd;
 	char buf[BUFSIZE];
 	do{
+		printf("%d\n", timeout.tv_sec);
 		if (setsockopt(cnfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
 		{
 			printf("unable to set socket");
