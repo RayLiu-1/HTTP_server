@@ -104,8 +104,8 @@ void *connection_handler(void *sockfd) {
 		char HTTP
 		if (strcmp(pch, "GET") == 0 ) {
 			pch = strtok(NULL, " ");
-			if (strlen(pch) == 0 or pch[0] != '/') {
-				buf = "HTTP/1.1 400 Bad Request\n<!DOCTYPE html>\n<html><body>400 Bad Request Reason: Invalid URL: <<reqested url>></body></html>\r";
+			if (strlen(pch) == 0 || pch[0] != '/') {
+				strcpy(buf,"HTTP/1.1 400 Bad Request\n<!DOCTYPE html>\n<html><body>400 Bad Request Reason: Invalid URL: <<reqested url>></body></html>\r");
 				write(cnfd, buf, strlen(buf));
 				continue;
 			}
@@ -121,13 +121,13 @@ void *connection_handler(void *sockfd) {
 			}
 			pch = strtok(NULL, " ");
 			if (strcmp(pch, "HTTP/1.1") != 0 && strcmp(pch, "HTTP/1.0") != 0) {
-				buf = "HTTP/1.1 400 Bad Request\n<!DOCTYPE html>\n<html><body>400 Bad Request Reason: Invalid HTTP-Version: <<req version>></body></html>\r";
+				strcpy(buf,"HTTP/1.1 400 Bad Request\n<!DOCTYPE html>\n<html><body>400 Bad Request Reason: Invalid HTTP-Version: <<req version>></body></html>\r");
 				write(cnfd, buf, strlen(buf));
 			}
 			else {
 				buf = "";
 				if (strcmp(pch, "HTTP/1.1") == 0) {
-					buf = "HTTP/1.1 404 Not Found\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :<<requested url>></body></html>\r"
+					strcpy(buf,"HTTP/1.1 404 Not Found\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :<<requested url>></body></html>\r)"
 				}
 			}
 		}
