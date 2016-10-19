@@ -110,7 +110,7 @@ void *connection_handler(void *sockfd) {
 			pch = strtok(NULL, " ");
 			if (strlen(pch) == 0 || pch[0] == '/') {
 				strcpy(sendbuf, "HTTP/1.1 400 Bad Request\n");
-				char error_message[400] = "<html><body>400 Bad Request Reason: Invalid URL:";
+				char error_message[400] = "<html><body>400 Bad Request Reason: Invalid URL:\n";
 				strcat(error_message, pch);
 				strcat(error_message, "</body></html>\n");
 				char connection[40] = "Connection: Close\r\n\r\n";
