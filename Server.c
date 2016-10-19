@@ -77,7 +77,7 @@ void *connection_handler(void *sockfd) {
 	int pipeline = 0;
 	int n = 0;
 	int cnfd = *(int*)sockfd;
-	char buf[BUFSIZE];
+	char* buf;
 	do{
 		printf("%d\n", timeout.tv_sec);
 		if (setsockopt(cnfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
@@ -102,7 +102,7 @@ void *connection_handler(void *sockfd) {
 		pch = strtok(buf,"/ ");
 		char filepath[200];
 		char filename[100];
-		char HTTP
+		char HTTP[100];
 		if (strcmp(pch, "GET") == 0 ) {
 			pch = strtok(NULL, " ");
 			if (strlen(pch) == 0 || pch[0] != '/') {
@@ -126,9 +126,9 @@ void *connection_handler(void *sockfd) {
 				write(cnfd, buf, strlen(buf));
 			}
 			else {
-				buf = "";
 				if (strcmp(pch, "HTTP/1.1") == 0) {
 					strcpy(buf, "HTTP/1.1 404 Not Found\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :<<requested url>></body></html>\r");
+					write(cnfd, buf, strlen(buf));
 				}
 			}
 		}
