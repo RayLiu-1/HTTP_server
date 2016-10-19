@@ -80,6 +80,7 @@ void *connection_handler(void *sockfd) {
 	int n = 0;
 	int cnfd = *(int*)sockfd;
 	char buf[BUFSIZE];
+	char sendbuf[BUFSIZE];
 	do{
 		//printf("%d\n", timeout.tv_sec);
 		if (setsockopt(cnfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
@@ -108,7 +109,7 @@ void *connection_handler(void *sockfd) {
 		if (strcmp(pch, "GET") == 0 ) {
 			pch = strtok(NULL, " ");
 			if (strlen(pch) == 0 || pch[0] == '/') {
-				strcpy(buf, "HTTP/1.1 400 Bad Request\n");
+				strcpy(sendbuf, "HTTP/1.1 400 Bad Request\n");
 				char error_message[400] = "<html><body>400 Bad Request Reason: Invalid URL:";
 				strcat(error_message, pch);
 				strcat(error_message, "</body></html>\n");
@@ -116,12 +117,12 @@ void *connection_handler(void *sockfd) {
 				char length[40] = ""; 
 				char type[40] = "Content-Type: text/html\n";
 				sprintf(length, "Content-Length: %d\n", strlen(error_message));
-				strcat(buf, type);
-				strcat(buf, length);
-				strcat(buf, connection);
-				strcat(buf, error_message);
-				write(cnfd, buf, strlen(buf)+1);
-				puts(buf);
+				strcat(sendbuf, type);
+				strcat(sendbuf, length);
+				strcat(sendbuf, connection);
+				strcat(sendbuf, error_message);
+				write(cnfd, sendbuf, strlen(buf)+1);
+				puts(sendbuf);
 				continue;
 			}
 			else if (strlen(pch) != 0 && pch[strlen(pch) - 1] == '/')
