@@ -99,11 +99,12 @@ void *connection_handler(void *sockfd) {
 			break;
 		}
 		char* pch;
-		pch = strtok(buf,"/ ");
+		pch = strtok(buf," ");
 		char filepath[200];
 		char filename[100];
 		char HTTP[100];
 		if (strcmp(pch, "GET") == 0 ) {
+			puts("GET");
 			pch = strtok(NULL, " ");
 			if (strlen(pch) == 0 || pch[0] != '/') {
 				strcpy(buf,"HTTP/1.1 400 Bad Request\n<!DOCTYPE html>\n<html><body>400 Bad Request Reason: Invalid URL: <<reqested url>></body></html>\r");
