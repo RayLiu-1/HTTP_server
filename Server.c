@@ -87,6 +87,7 @@ void *connection_handler(void *sockfd) {
 		//Send the message back to client
 		n = recv(cnfd, buf, BUFSIZE, 0);
 		//pch = strtok(buf)
+		printf("%d\n", n);
 		if (n == 0) {
 			break;
 		}
