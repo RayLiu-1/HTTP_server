@@ -127,7 +127,7 @@ void *connection_handler(void *sockfd) {
 			else {
 				buf = "";
 				if (strcmp(pch, "HTTP/1.1") == 0) {
-					strcpy(buf,"HTTP/1.1 404 Not Found\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :<<requested url>></body></html>\r)"
+					strcpy(buf, "HTTP/1.1 404 Not Found\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :<<requested url>></body></html>\r");
 				}
 			}
 		}
