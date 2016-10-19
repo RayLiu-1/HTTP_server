@@ -122,6 +122,7 @@ void *connection_handler(void *sockfd) {
 				strcat(buf, connection);
 				strcat(buf, error_message);
 				write(cnfd, buf, strlen(buf)+1);
+				puts(buf);
 				continue;
 			}
 			else if (strlen(pch) != 0 && pch[strlen(pch) - 1] == '/')
