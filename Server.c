@@ -114,7 +114,7 @@ void *connection_handler(void *sockfd) {
 				strcat(error_message, "</body></html>\n");
 				char connection[40] = "Connection: Close\n";
 				char length[40] = ""; 
-				char type[40] = "Content-type: text/html\n";
+				char type[40] = "Content-Type: text/html\n";
 				sprintf(length, "Content-Length: %d\n", strlen(error_message));
 				strcat(buf, type);
 				strcat(buf, length);
