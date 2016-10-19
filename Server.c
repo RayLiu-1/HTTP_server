@@ -21,7 +21,7 @@ char DocumentRoot[400];
 char DirectoryIndex[100];
 char WebPage[10][100];
 char ContentType[20][2][100];
-int KeepaliveTime;
+int KeepaliveTime ;
 
 void *connection_handler(void *);
 int set_config();
