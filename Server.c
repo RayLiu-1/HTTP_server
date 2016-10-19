@@ -15,10 +15,11 @@
 #include <stdio.h>
 
 #define BUFSIZE 4096
-#define QUESIZE 32// maximum number of client connections
+#define QUESIZE 4// maximum number of client connections
 int ListenPort;
-char DocumentRoot[100];
+char DocumentRoot[400];
 char DirectoryIndex[100];
+char WebPage[10][100];
 char ContentType[20][2][100];
 int KeepaliveTime;
 
@@ -27,13 +28,64 @@ int set_config();
 
 int main(int argc, char *argv[])
 {
-	if (set_config()==0)
+	if (set_config()!=0)
 	{
 		perror("set config error");
 	}
-	int msock, cnfd, n;
-	
-	char client[QUESIZE];
+	int lsfd, cnfd, *sock;
+	struct sockaddr_in server,client;
+	//Create socket
+	lsfd = socket(AF_INET, SOCK_STREAM, 0);
+	if (lsfd == -1) {
+		perror("Create sock failed");
+		return 1;
+	}
+	puts("Socket created");
+
+	//set socket address
+	server.sin_family = AF.INET;
+	server.sin_addr.s_addr = INARRY_ANY;
+	server.sin_port = htons(ListenPort);
+	if (bind(lsfd, (struct sockaddr *)&server, sizeof(server)) < 0){
+		perror("Bind failed");
+		return 1;
+	}
+	puts("Socket bind");
+
+	//Listen
+	Listen(lsfd, QUESIZE);
+	puts("Listenning...");
+	while (cnfd = accept(lsfd, (struct sockaddr *)&client, sizeof(client)) < 0) {
+		puts("connection appected");
+		int* pfd = (int*)malloc(sizeof(int));
+		*pfd = cnfd;
+		pthread_t new_thread;
+		if (pthread_create(&new_thread, NULL, connection_handler, (void*)pfd) < 0)
+		{
+			perror("Create thread failed");
+			return 1;
+		}
+	}
+	perror("accept failed")
+	return 0;
+}
+
+void *connection_handler(void *sockfd) {
+	do {
+		int cnfd = *(int*)sockfd;
+		int n = 0;
+		char buf[BUFSIZE];
+		while ((n = recv(cnfd, buf, BUFSIZE, 0)) > 0)
+		{
+			//Send the message back to client
+			put("buf");
+		}
+		if (n == 0) {
+			puts("Client disconnected");
+			fflush(stdout);
+		}
+		free(socket_desc);	
+	}
 	return 0;
 }
 
@@ -41,9 +93,18 @@ int set_config()
 {
 	FILE *fp;
 	fp = fopen("ws.conf", "r");
+	if (fp == NULL) {
+		pritf
+	}
+	if (fp) {
+		return 1;
+	}
 	char readBuf[200];
-	puts("open");
+
+	int ntype = 0;
+	int nIndex = 0;
 	while (fgets(readBuf,200,(FILE*) fp)) {
+		
 		if (readBuf[0] == '#')
 			continue;
 		else {
@@ -52,9 +113,26 @@ int set_config()
 			if (strcmp(pch, "Listen") == 0) {
 				pch = strtok(NULL, " ");
 				ListenPort = atoi(pch);
-				printf("%d\n", ListenPort);
+				printf("Set listen port:%d\n", ListenPort);
+			}
+			else if (strcmp(pch, "DocumentRoot")==0) {
+				pch = strtok(NULL, "");
+				strcpy(DocumentRoot ,pch)
+			}
+			else if (strcmp(pch, "DirectoryIndex") == 0) {
+				pch = strtok(NULL, "");
+				strcpy(webPage[nIndex++], pch);
+			}
+			else if (pch[0] == ".") {
+				strcpy(ContentType[ntype++][0], pch+1);
+				pch = strtok(NULL, "");
+				strcpy(ContentType[ntype++][1], pch);
+			}
+			else if (strcmp(pch, "KeepaliveTime") == 0) {
+				pch = strtok(NULL, " ");
+				KeepaliveTime = atoi(pch);
 			}
 		}
 	}
-	return 1;
+	return 0;
 }
