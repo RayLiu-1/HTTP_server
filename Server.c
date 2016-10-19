@@ -106,7 +106,21 @@ void *connection_handler(void *sockfd) {
 		if (strcmp(pch, "GET") == 0 ) {
 			pch = strtok(NULL, " ");
 			if (strlen(pch) == 0 || pch[0] != '/') {
-				strcpy(buf,"HTTP/1.1 400 Bad Request\r\r<other-headers>\n\r<html><body>400 Bad Request Reason: Invalid URL: <<reqested url>></body></html>\n\r");
+				strcpy(buf, "HTTP/1.1 400 Bad Request\n");
+				char error_message[400] = "\r <html><body>400 Bad Request Reason: Invalid URL:";
+				strcat(error_message, pch);
+				strcat(error_message, "</body></html>\n");
+				char connection[40] = "Connection: Close\n";
+				char length[40] = "Content-Length: ";
+				char type[40] = "Content-type: text/html\n"
+				char nlenth[40];
+				itoa(strlen(error_message), nlenth, 10);
+				strcat(length, nlenth);
+				strcat(length, "\n");
+				strcat(buf, type);
+				strcat(buf, length);
+				strcat(buf, connection);
+				strcat(buf, error_message);
 				write(cnfd, buf, strlen(buf)+1);
 				continue;
 			}
