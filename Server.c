@@ -98,6 +98,7 @@ void *connection_handler(void *sockfd) {
 			fflush(stdout);
 			break;
 		}
+		char pch[BUFSIZE];
 		pch = strtok(buf,"/ ");
 		char filepath[200];
 		char filename[100];
