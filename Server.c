@@ -13,6 +13,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+
 
 #define BUFSIZE 4096
 #define QUESIZE 4// maximum number of client connections
@@ -111,11 +113,9 @@ void *connection_handler(void *sockfd) {
 				strcat(error_message, pch);
 				strcat(error_message, "</body></html>\n");
 				char connection[40] = "Connection: Close\n";
-				char length[40] = "Content-Length: ";
-				char type[40] = "Content-type: text/html\n"
-				char nlenth[40];
-				itoa(strlen(error_message), nlenth, 10);
-				strcat(length, nlenth);
+				char length[40] = ""; 
+				char type[40] = "Content-type: text/html\n";
+				sprintf(length, "Content-Length: ", strlen(error_message));
 				strcat(length, "\n");
 				strcat(buf, type);
 				strcat(buf, length);
