@@ -77,7 +77,7 @@ void *connection_handler(void *sockfd) {
 	int pipeline = 0;
 	int n = 0;
 	int cnfd = *(int*)sockfd;
-	char* buf;
+	char buf[BUFSIZE];
 	do{
 		printf("%d\n", timeout.tv_sec);
 		if (setsockopt(cnfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
@@ -98,7 +98,7 @@ void *connection_handler(void *sockfd) {
 			fflush(stdout);
 			break;
 		}
-		char pch[BUFSIZE];
+		char* pch;
 		pch = strtok(buf,"/ ");
 		char filepath[200];
 		char filename[100];
