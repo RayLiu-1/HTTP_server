@@ -72,17 +72,25 @@ int main(int argc, char *argv[])
 }
 
 void *connection_handler(void *sockfd) {
+	struct timeval timeout;
+	timeout.tv_sec = KeepaliveTime;
+	timeout.tv_usec = 0;
 	int pipeline = 0;
 	int n = 0;
 	int cnfd = *(int*)sockfd;
 	char buf[BUFSIZE];
 	do{
+		if (setsockopt(cnfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
+		{
+			printf("unable to set socket");
+		}
 		//Send the message back to client
 		n = recv(cnfd, buf, BUFSIZE, 0);
 		//pch = strtok(buf)
-		puts(buf);
-		printf("%d\n", n);
-	} while (n > 0||pipeline); 
+		if (n == 0) {
+			break;
+		}
+	} while (pipeline); 
 	if (n == 0) {
 		puts("Client disconnected");
 		fflush(stdout);
@@ -100,11 +108,11 @@ int set_config()
 		perror("failed file opening");
 		return 1;
 	}
-	char readBuf[200];
+	char readBuf[BUFSIZE];
 
 	int ntype = 0;
 	int nIndex = 0;
-	while (fgets(readBuf,200,(FILE*) fp)) {
+	while (fgets(readBuf, BUFSIZE,(FILE*) fp)) {
 		
 		if (readBuf[0] == '#')
 			continue;
