@@ -73,20 +73,21 @@ int main(int argc, char *argv[])
 
 void *connection_handler(void *sockfd) {
 	int pipeline = 0;
-	do {
-		int cnfd = *(int*)sockfd;
-		int n = 0;
-		char buf[BUFSIZE];
-		do{
-			//Send the message back to client
-			n = recv(cnfd, buf, BUFSIZE, 0);
-			puts(buf);
-		} while (n > 0);
-		if (n == 0) {
-			puts("Client disconnected");
-			fflush(stdout);
-		}
-	} while (pipeline);
+	int n = 0;
+	int cnfd = *(int*)sockfd;
+	char buf[BUFSIZE];
+	do{
+		//Send the message back to client
+		n = recv(cnfd, buf, BUFSIZE, 0);
+		//pch = strtok(buf)
+		puts(buf);
+		printf("%d\n", n);
+	} while (n > 0||pipeline); 
+	if (n == 0) {
+		puts("Client disconnected");
+		fflush(stdout);
+	}
+	//if ()
 	free(sockfd);
 	return 0;
 }
