@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
 
 	//set socket address
 	server.sin_family = AF_INET;
-	server.sin_addr.s_addr = INADDY_ANY;
+	server.sin_addr.s_addr = INADDR_ANY;
 	server.sin_port = htons(ListenPort);
 	if (bind(lsfd, (struct sockaddr *)&server, sizeof(server)) < 0){
 		perror("Bind failed");
