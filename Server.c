@@ -121,7 +121,7 @@ void *connection_handler(void *sockfd) {
 				strcat(sendbuf, length);
 				strcat(sendbuf, connection);
 				strcat(sendbuf, error_message);
-				write(cnfd, sendbuf, strlen(buf)+1);
+				write(cnfd, sendbuf, strlen(sendbuf)+1);
 				puts(sendbuf);
 				continue;
 			}
