@@ -96,8 +96,6 @@ int set_config()
 	fp = fopen("ws.conf", "r");
 	if (fp == NULL) {
 		perror("failed file opening");
-	}
-	if (fp) {
 		return 1;
 	}
 	char readBuf[200];
