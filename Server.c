@@ -77,12 +77,11 @@ void *connection_handler(void *sockfd) {
 		int cnfd = *(int*)sockfd;
 		int n = 0;
 		char buf[BUFSIZE];
-		n = recv(cnfd, buf, BUFSIZE, 0);
-		while (n > 0)
-		{
+		do(){
 			//Send the message back to client
-			puts("buf");
-		}
+			n = recv(cnfd, buf, BUFSIZE, 0);
+			puts(buf);
+		}while (n > 0)
 		if (n == 0) {
 			puts("Client disconnected");
 			fflush(stdout);
