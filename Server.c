@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 	//Listen
 	listen(lsfd, QUESIZE);
 	puts("Listenning...");
-	while (cnfd = accept(lsfd, (struct sockaddr *)&client, (socklen_t*) sizeof(client)) < 0) {
+	while (cnfd = accept(lsfd, (struct sockaddr *)&client, (socklen_t*) sizeof(client))) {
 		puts("connection appected");
 		int* pfd = (int*)malloc(sizeof(int));
 		*pfd = cnfd;
@@ -76,7 +76,8 @@ void *connection_handler(void *sockfd) {
 		int cnfd = *(int*)sockfd;
 		int n = 0;
 		char buf[BUFSIZE];
-		while ((n = recv(cnfd, buf, BUFSIZE, 0)) > 0)
+		n = recv(cnfd, buf, BUFSIZE, 0);
+		while (n > 0)
 		{
 			//Send the message back to client
 			puts("buf");
