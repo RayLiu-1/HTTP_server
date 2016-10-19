@@ -79,7 +79,7 @@ void *connection_handler(void *sockfd) {
 	int cnfd = *(int*)sockfd;
 	char buf[BUFSIZE];
 	do{
-		printf("%d\n", timeout.tv_sec);
+		//printf("%d\n", timeout.tv_sec);
 		if (setsockopt(cnfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
 		{
 			printf("unable to set socket");
@@ -128,6 +128,7 @@ void *connection_handler(void *sockfd) {
 			else {
 				if (strcmp(pch, "HTTP/1.1") == 0) {
 					strcpy(buf, "HTTP/1.1 404 Not Found\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :<<requested url>></body></html>\r");
+					puts(buf);
 					write(cnfd, buf, strlen(buf));
 				}
 			}
