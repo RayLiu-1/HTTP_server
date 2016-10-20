@@ -91,6 +91,7 @@ void *connection_handler(void *sockfd) {
 		}*/
 		//Send the message back to client
 		memset(buf, 0, BUFSIZE);
+		puts("duan");
 		n = recv(cnfd, buf, BUFSIZE, 0);
 		//pch = strtok(buf)
 		if (n == -1) {
