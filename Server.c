@@ -115,6 +115,13 @@ void *connection_handler(void *sockfd) {
 			strcpy(HTTP, "HTTP/1.1");
 		else if(strcmp(pch, "HTTP/1.0") == 0)
 			strcpy(HTTP, "HTTP/1.0");
+		/*if ((strcmp(request, "POST") == 0)) {
+			char content[BUFSIZE] = "";
+			char * past;
+			while (pch != NULL) {
+
+			}
+		}*/
 		while (pch != NULL) {
 			pch = strtok(NULL, ": \n\r");
 			if(pch !=NULL)
