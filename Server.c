@@ -239,13 +239,11 @@ void *connection_handler(void *sockfd) {
 				while (n < 20) {
 					if (strcmp(ContentType[n][0], pchar) == 0)
 					{
-						puts(ContentType[n][0]);
 						strcpy(type, ContentType[n][1]);
 					}
-					puts(ContentType[n][0]);
 					n++;
 				}
-				
+				puts(type);
 				FILE* fp = fopen(filepath, "r");
 				if (!fp) {
 					strcpy(sendbuf, HTTP);
