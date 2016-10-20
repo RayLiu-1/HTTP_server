@@ -112,14 +112,15 @@ void *connection_handler(void *sockfd) {
 		strcpy(filename, pch);
 		pch = strtok(NULL, " \n");
 		strcpy(HTTP, pch);
-		while (pch != NULL||'\n') {puts(pch);
+		while (pch != NULL) {
 			pch = strtok(NULL, ": \n");
 			if (strcmp(pch, "Connection") == 0) {
 				pch = strtok(NULL, ": \r\n");
-				puts(pch);
-				if (strcmp(pch, "keep-alive") == 0) {
-					connection = 1;
-					break;
+				if (pch != NULL) {
+					if (strcmp(pch, "keep-alive") == 0) {
+						connection = 1;
+						break;
+					}
 				}
 			}
 		}
@@ -224,15 +225,15 @@ int set_config()
 			else if (strcmp(pch, "DocumentRoot")==0) {
 				pch = strtok(NULL, " ");
 				strcpy(DocumentRoot, pch);
+				if (strlen(DocumentRoot) != 0)
+					DocumentRoot[strlen(DocumentRoot) - 1] = '\0';
 			}
 			else if (strcmp(pch, "DirectoryIndex") == 0) {
 				while (pch != NULL) {
-					puts(pch);
 					pch = strtok(NULL, " ");
 					if(pch!=NULL)
 						strcpy(WebPage[nIndex++], pch);
 				}
-				puts("pass");
 			}
 			else if (pch[0] == '.') {
 				strcpy(ContentType[ntype++][0], pch+1);
