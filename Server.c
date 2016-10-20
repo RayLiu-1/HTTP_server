@@ -173,7 +173,7 @@ void *connection_handler(void *sockfd) {
 				write(cnfd, sendbuf, strlen(sendbuf) + 1);
 				puts(sendbuf);
 				memset(sendbuf, 0, BUFSIZE);
-				while (fgets(sendbuf, BUFSIZE, (FILE*)fp)) {
+				while (fgets(sendbuf, BUFSIZE, (FILE*)fp)!=NULL) {
 					write(cnfd, sendbuf, strlen(sendbuf) + 1);
 					puts(sendbuf);
 					puts("duancuowu");
