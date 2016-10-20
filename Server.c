@@ -112,7 +112,7 @@ void *connection_handler(void *sockfd) {
 		strcpy(filename, pch);
 		pch = strtok(NULL, " ");
 		strcpy(HTTP, pch);
-		put(HTTP);
+		puts(HTTP);
 		while (pch != NULL) {
 			pch = strtok(NULL, ": \n");
 			if (strcmp(pch, "Connection") == 0) {
