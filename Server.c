@@ -106,11 +106,11 @@ void *connection_handler(void *sockfd) {
 			connection = 3;
 			break;
 		}
-		puts(buf);
 		else {
 			strcpy(lastbuf, buf);
 			pch = strtok(buf, " ");
 		}
+		puts(buf);
 		memset(buf, 0, BUFSIZE);
 		if (n == 0) {
 			continue;
