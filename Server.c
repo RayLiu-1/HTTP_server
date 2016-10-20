@@ -104,14 +104,14 @@ void *connection_handler(void *sockfd) {
 		char* pch;
 		
 		if (n == -1) {
-			pch = strtok(lastbuf, " ");
+			pch = strtok(lastbuf," ");
 			connection = 3;
 		}
 		else {
 			strcpy(lastbuf, buf);
 			pch = strtok(buf, " ");
 		}
-		//puts(lastbuf);
+		puts(lastbuf);
 		if (n == 0) {
 			continue;
 		}
