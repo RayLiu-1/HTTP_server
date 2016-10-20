@@ -231,11 +231,12 @@ void *connection_handler(void *sockfd) {
 				memset(sendbuf, 0, BUFSIZE + 1);
 				strcpy(filepath, DocumentRoot);
 				strcat(filepath, filename);
-				puts(filepath);
+				
 				char * pchar = strtok(filename, ".");
 				pchar = strtok(filename, ".");
 				char type[40] = "";
 				int n = 0;
+				puts(pchar);
 				while (n < 20) {
 					if (strcmp(ContentType[n][0], pchar) == 0)
 						strcpy(type, ContentType[n][1]);
