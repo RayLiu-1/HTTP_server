@@ -130,8 +130,9 @@ void *connection_handler(void *sockfd) {
 		
 		if (strcmp(request, "GET") == 0 ) {
 			if (strlen(filename) == 0 || filename[0] == '/') {
+
 				strcpy(sendbuf, HTTP);
-				strcpy(sendbuf, " 400 Bad Request\n");
+				strcat(sendbuf, " 400 Bad Request\n");
 				char error_message[400] = "<html><body>400 Bad Request Reason: Invalid URL:";
 				strcat(error_message, filename);
 				strcat(error_message, "\n</body></html>\n");
