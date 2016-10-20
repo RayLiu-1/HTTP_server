@@ -113,7 +113,7 @@ void *connection_handler(void *sockfd) {
 		else {
 			char error_message[100] = "HTTP / 1.1 500 Internal Server Error : cannot allocate memory";
 			write(cnfd, error_message, strlen(error_message) + 1);
-			continue
+			continue;
 		}
 		pch = strtok(NULL, " \n\r");
 		strcpy(filename, pch);
