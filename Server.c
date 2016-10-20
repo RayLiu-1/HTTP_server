@@ -227,6 +227,7 @@ int set_config()
 			}
 			else if (strcmp(pch, "DirectoryIndex") == 0) {
 				while (pch != NULL &&pch[0] != '\n'&&pch[0] != '\0') {
+					puts(pch);
 					pch = strtok(NULL, "");
 					strcpy(WebPage[nIndex++], pch);
 				}
