@@ -110,7 +110,7 @@ void *connection_handler(void *sockfd) {
 			strcpy(lastbuf, buf);
 			pch = strtok(buf, " ");
 		}
-		puts(buf);
+		puts(lastbuf);
 		memset(buf, 0, BUFSIZE);
 		if (n == 0) {
 			continue;
