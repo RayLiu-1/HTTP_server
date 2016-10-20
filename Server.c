@@ -250,7 +250,9 @@ void *connection_handler(void *sockfd) {
 				strcpy(sendbuf, "");
 				strcat(sendbuf, HTTP);
 				strcat(sendbuf, " 200 OK\n");
-				sprintf(sendbuf,"Content-Type: %s\n", type);
+				char contentType[40] = "";
+				sprintf(contentType,"Content-Type: %s\n", type);
+				strcat(sendbuf, contentType);
 				char length[40] = "";
 				fseek(fp, 0, SEEK_END);
 				sprintf(length, "Content-Length: %d\n", (int)ftell(fp));
