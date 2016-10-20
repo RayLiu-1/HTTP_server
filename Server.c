@@ -117,19 +117,35 @@ void *connection_handler(void *sockfd) {
 			strcpy(HTTP, "HTTP/1.0");
 		while (pch != NULL) {
 			pch = strtok(NULL, ": \n\r");
-			if (strcmp(pch, "Connection") == 0) {
-				pch = strtok(NULL, ": \r\n");
-				if (pch != NULL) {
-					if (strcmp(pch, "keep-alive") == 0) {
-						connection = 1;
-						break;
+			if(pch !=NULL)
+			{
+				if (strcmp(pch, "Connection") == 0) {
+					pch = strtok(NULL, ": \r\n");
+					if (pch != NULL) {
+						if (strcmp(pch, "keep-alive") == 0) {
+							connection = 1;
+							timeout.tv_sec = KeepaliveTime;
+							timeout.tv_usec = 0;
+							if (setsockopt(cnfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
+							{
+								printf("unable to set socket");
+							}
+						}
 					}
 				}
 			}
 		}
+		if (connextion == 0) {
+			timeout.tv_sec = 0;
+			timeout.tv_usec = 0;
+			if (setsockopt(cnfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
+			{
+				printf("unable to set socket");
+			}
+		}
 		
 		if (strcmp(request, "GET") == 0 ) {
-			if (strlen(filename) == 0 || filename[0] == '/') {
+			if (strlen(filename) == 0 || filename[0] != '/') {
 
 				strcpy(sendbuf, HTTP);
 				strcat(sendbuf, " 400 Bad Request\n");
@@ -195,20 +211,59 @@ void *connection_handler(void *sockfd) {
 				write(cnfd, sendbuf, strlen(buf) + 1);
 			}*/
 			else if (strcmp(HTTP, "HTTP/1.1") != 0 && strcmp(HTTP, "HTTP/1.0") != 0) {
-				strcpy(buf,"HTTP/1.1 400 Bad Request\n<other-headers>\n<html><body>400 Bad Request Reason: Invalid HTTP-Version: <<req version>></body></html>\r");
-				write(cnfd, buf, strlen(buf)+1);
+				strcpy(buf, "HTTP/1.1 400 Bad Request\n");
+				char error_message[400] = "<html><body>400 Bad Request Reason: Invalid HTTP:";
+				strcat(error_message, filename);
+				strcat(error_message, "\n</body></html>\n");
+				char connection[40] = "Connection: Close\r\n\r\n";
+				char length[40] = "";
+				char type[40] = "Content-Type: text/html\n";
+				sprintf(length, "Content-Length: %d\n", strlen(error_message));
+				strcat(sendbuf, type);
+				strcat(sendbuf, length);
+				strcat(sendbuf, connection);
+				strcat(sendbuf, error_message);
+				write(cnfd, sendbuf, strlen(sendbuf) + 1);
+				puts(sendbuf);
+				continue;
 			}
 			else {
-				if (strcmp(pch, "HTTP/1.1") == 0) {
-					strcpy(sendbuf, "HTTP/1.1 404 Not Found \r\n\r\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :");
+				strcpy(filepath, DocumentRoot);
+				char * pchar = strtok(filname, ".");
+				pchar = strtok(filname, ".");
+				char type[40] = "";
+				int n = 0;
+				while (n < 20) {
+					if (strcmp(ContentType[n][0], pchar) == 0)
+						strcpy(type, ContentType[n++][1]);
 				}
-				else {
-					strcpy(sendbuf, "HTTP/1.0 404 Not Found \r\n\r\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :");
-
+				strcat(filepath, filename);
+				FILE* fp = fopen(filepath, "r");
+				if (!fp) {
+					perror("Open file failed");
 				}
-				strcat(sendbuf, filename);
-				strcat(sendbuf, "< / body>< / html>\r");
-				write(cnfd, sendbuf, strlen(buf)+1);
+				strcpy(sendbuf, "");
+				strcat(sendbuf, HTTP);
+				strcat(sendbuf, " 200 OK\n");
+				sprintf(sendbuf,"Content-Type: %s\n", type);
+				char length[40] = "";
+				fseek(fp, 0, SEEK_END);
+				sprintf(length, "Content-Length: %d\n", (int)ftell(fp));
+				rewind(fp);
+				strcat(sendbuf, length);
+				if (connection == 1) {
+					strcat(sendbuf, "Connection: Keep-alive");
+					connection = 1;
+				}
+				strcat(sendbuf, "\r\n\r\n");
+				write(cnfd, sendbuf, strlen(sendbuf) + 1);
+				puts(sendbuf);
+				memset(sendbuf, 0, BUFSIZE);
+				while (fgets(sendbuf, BUFSIZE, (FILE*)fp) != NULL) {
+					write(cnfd, sendbuf, strlen(sendbuf) + 1);
+				}
+				fclose(fp);
+				continue;
 			}
 		}
 	} while (connection==1); 
