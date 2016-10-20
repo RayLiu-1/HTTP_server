@@ -265,6 +265,7 @@ void *connection_handler(void *sockfd) {
 					strcat(sendbuf, connection);
 					strcat(sendbuf, error_message);
 					write(cnfd, sendbuf, strlen(sendbuf));
+					fclose(fp);
 					continue;
 				}
 				strcpy(sendbuf, "");
