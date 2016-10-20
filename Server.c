@@ -185,7 +185,7 @@ void *connection_handler(void *sockfd) {
 				rewind(fp);
 				strcat(sendbuf, length);
 				if (connection == 1) {
-					strcat(sendbuf, "Connection: Keep-alive");
+					strcat(sendbuf, "Connection: keep-alive");
 					connection =1;
 				}
 				strcat(sendbuf, "\r\n\r\n");
@@ -230,6 +230,7 @@ void *connection_handler(void *sockfd) {
 			}
 			else {
 				strcpy(filepath, DocumentRoot);
+				strcat(filepath, filename);
 				char * pchar = strtok(filename, ".");
 				pchar = strtok(filename, ".");
 				char type[40] = "";
@@ -238,7 +239,7 @@ void *connection_handler(void *sockfd) {
 					if (strcmp(ContentType[n][0], pchar) == 0)
 						strcpy(type, ContentType[n++][1]);
 				}
-				strcat(filepath, filename);
+				
 				FILE* fp = fopen(filepath, "r");
 				if (!fp) {
 					perror("Open file failed");
@@ -253,7 +254,7 @@ void *connection_handler(void *sockfd) {
 				rewind(fp);
 				strcat(sendbuf, length);
 				if (connection == 1) {
-					strcat(sendbuf, "Connection: Keep-alive");
+					strcat(sendbuf, "Connection: keep-alive");
 				}
 				strcat(sendbuf, "\r\n\r\n");
 				write(cnfd, sendbuf, strlen(sendbuf) + 1);
