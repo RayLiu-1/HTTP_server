@@ -104,6 +104,7 @@ void *connection_handler(void *sockfd) {
 		char* pch;
 		
 		if (n == -1) {
+			puts("timeout");
 			pch = strtok(lastbuf," ");
 			connection = 3;
 		}
