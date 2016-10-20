@@ -81,6 +81,7 @@ void *connection_handler(void *sockfd) {
 	int n = 0;
 	int cnfd = *(int*)sockfd;
 	char buf[BUFSIZE];
+	char lastbuf[BUFSIZE];
 	char sendbuf[BUFSIZE+1];
 	int connection = 0;
 	do{
@@ -90,27 +91,35 @@ void *connection_handler(void *sockfd) {
 			printf("unable to set socket");
 		}*/
 		//Send the message back to client
-		memset(buf, 0, BUFSIZE);
-		
 		n = recv(cnfd, buf, BUFSIZE, 0);
-		puts(buf);
+		
 		/*while (n != 0) {
 			char newbuf[100] = "";
 			n = recv(cnfd, newbuf, 100, 0);
 			puts(newbuf);
 			strcat(buf, newbuf);
 		}*/
+		
+		char* pch;
 		//puts(buf);
 		if (n == -1) {
-			puts("Time out");
-			fflush(stdout);
+			pch = strtok(buf, " ");
+			connection = 3;
 			break;
 		}
+		else {
+			strcpy(lastbuf, buf);
+			pch = strtok(buf, " ");
+			
+		}
+		
+
+		memset(buf, 0, BUFSIZE);
 		if (n == 0) {
 			continue;
 		}
-		char* pch;
-		pch = strtok(buf," ");
+		
+		
 		char filepath[200];
 		char filename[100];
 		char HTTP[100];
@@ -161,7 +170,7 @@ void *connection_handler(void *sockfd) {
 				}
 			}
 		}
-		if (connection == 0) {
+		if ((connection == 0)||(connection == 3)) {
 			timeout.tv_sec = 0;
 			timeout.tv_usec = 0;
 			if (setsockopt(cnfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
