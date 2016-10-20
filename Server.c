@@ -290,7 +290,7 @@ void *connection_handler(void *sockfd) {
 					strcat(sendbuf, "Connection: close");
 				}
 				strcat(sendbuf, "\r\n\r\n");
-				write(cnfd, sendbuf, strlen(sendbuf) + 1);
+				write(cnfd, sendbuf, strlen(sendbuf));
 				memset(sendbuf, 0, BUFSIZE+1);
 				int read = 0;
 				do {
