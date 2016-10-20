@@ -213,6 +213,7 @@ void *connection_handler(void *sockfd) {
 	} while (connection==1); 
 	
 	free(sockfd);
+	puts("exit");
 	pthread_exit(0);
 }
 
