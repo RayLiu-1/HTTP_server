@@ -242,14 +242,14 @@ void *connection_handler(void *sockfd) {
 				char * pchar = strtok(filename, ".");
 				pchar = strtok(NULL, ".");
 				char type[40] = "";
-				int n = 0;
-				while (n < 20) {
-					if (strcmp(ContentType[n][0], pchar) == 0)
+				int x = 0;
+				while (x < 20) {
+					if (strcmp(ContentType[x][0], pchar) == 0)
 					{
-						strcpy(type, ContentType[n][1]);
+						strcpy(type, ContentType[x][1]);
 						puts(type);
-						puts(ContentType[n][1]);
-					}
+						);
+					}puts(ContentType[x][1]
 					n++;
 				}
 				puts(type);
@@ -275,7 +275,7 @@ void *connection_handler(void *sockfd) {
 				strcat(sendbuf, HTTP);
 				strcat(sendbuf, " 200 OK\n");
 				char contentType[40] = "";
-				sprintf(contentType,"Content-Type: %s\n", type);
+				sprintf(contentType,"Content-Type: \n", type);
 				strcat(sendbuf, contentType);
 				char length[40] = "";
 				fseek(fp, 0, SEEK_END);
