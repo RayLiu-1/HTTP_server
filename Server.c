@@ -92,9 +92,6 @@ void *connection_handler(void *sockfd) {
 		//Send the message back to client
 		memset(buf, 0, BUFSIZE);
 		n = recv(cnfd, buf, BUFSIZE, 0);
-		if (n == 0) {
-			break;
-		}
 		//pch = strtok(buf)
 		if (n == -1) {
 			puts("Time out");
@@ -306,6 +303,7 @@ void *connection_handler(void *sockfd) {
 		puts("Client disconnected");
 		//fflush(stdout);
 	}
+	fflush(stdout);
 	free(sockfd);
 	pthread_exit(0);
 }
