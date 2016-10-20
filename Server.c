@@ -229,8 +229,8 @@ void *connection_handler(void *sockfd) {
 			}
 			else {
 				strcpy(filepath, DocumentRoot);
-				char * pchar = strtok(filname, ".");
-				pchar = strtok(filname, ".");
+				char * pchar = strtok(filename, ".");
+				pchar = strtok(filename, ".");
 				char type[40] = "";
 				int n = 0;
 				while (n < 20) {
