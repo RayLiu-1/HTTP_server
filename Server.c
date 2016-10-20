@@ -97,11 +97,6 @@ void *connection_handler(void *sockfd) {
 			fflush(stdout);
 			break;
 		}
-		if (n == 0) {
-			puts("Client disconnected");
-			fflush(stdout);
-			break;
-		}
 		char* pch;
 		pch = strtok(buf," ");
 		char filepath[200];
@@ -179,7 +174,6 @@ void *connection_handler(void *sockfd) {
 					write(cnfd, sendbuf, strlen(sendbuf) + 1);
 				}
 				fclose(fp);
-				puts("test");
 			}
 			else{
 				/*strcpy(filepath, DocumentRoot);
@@ -213,7 +207,11 @@ void *connection_handler(void *sockfd) {
 			}
 		}
 	} while (connection==1); 
-	
+	if (n == 0) {
+		puts("Client disconnected");
+		fflush(stdout);
+		break;
+	}
 	free(sockfd);
 	pthread_exit(0);
 }
