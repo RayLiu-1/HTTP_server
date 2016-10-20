@@ -111,13 +111,13 @@ void *connection_handler(void *sockfd) {
 		strcpy(request, pch);
 		pch = strtok(NULL, " \n");
 		strcpy(filename, pch);
-		puts(filename);
 		pch = strtok(NULL, " \n");
 		strcpy(HTTP, pch);
-		while (pch != NULL) {puts("pch");
+		while (pch != NULL) {puts(pch);
 			pch = strtok(NULL, ": \n");
 			if (strcmp(pch, "Connection") == 0) {
 				pch = strtok(NULL, ": \n");
+				puts(pch);
 				if (strcmp(pch, "Keep-alive") == 0) {
 					connection = 1;
 				}
