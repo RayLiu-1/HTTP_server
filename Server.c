@@ -122,6 +122,7 @@ void *connection_handler(void *sockfd) {
 				}
 			}
 		}
+		put("pch");
 		if (strcmp(request, "GET") == 0 ) {
 			if (strlen(filename) == 0 || filename[0] != '/') {
 				strcpy(sendbuf, HTTP);
