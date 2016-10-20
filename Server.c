@@ -268,7 +268,8 @@ void *connection_handler(void *sockfd) {
 				strcat(sendbuf, "\n");
 				char length[40] = "";
 				fseek(fp, 0, SEEK_END);
-				sprintf(length, "Content-Length: %d\n", (int)ftell(fp));
+				int filelen = (int)ftell(fp)
+				sprintf(length, "Content-Length: %d\n", filelen);
 				rewind(fp);
 				strcat(sendbuf, length);
 				if (connection == 1) {
@@ -279,7 +280,7 @@ void *connection_handler(void *sockfd) {
 				write(cnfd, sendbuf, strlen(sendbuf) + 1);
 				//puts(sendbuf);
 				memset(sendbuf, 0, BUFSIZE);
-				while (fgets(sendbuf, BUFSIZE, (FILE*)fp) != NULL) {
+				while (fread(sendbuf, filelen,1,fp) != NULL) {
 					write(cnfd, sendbuf, strlen(sendbuf) + 1);
 				}
 				fclose(fp);
