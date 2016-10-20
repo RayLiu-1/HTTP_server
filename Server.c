@@ -143,7 +143,7 @@ void *connection_handler(void *sockfd) {
 			}
 			else if (strlen(filename) != 0 && pch[strlen(filename) - 1] == '/')
 			{
-				strcpy(sendbuf,"")
+				strcpy(sendbuf, "");
 				strcpy(filepath, DocumentRoot);
 				strcat(filepath, "/");
 				strcat(filepath, WebPage[0]);
