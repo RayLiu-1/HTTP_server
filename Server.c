@@ -207,6 +207,7 @@ void *connection_handler(void *sockfd) {
 					printf("%d\n", read);
 					write(cnfd, sendbuf, read + 1);
 				} while (read == BUFSIZE);
+				write(cnfd, sendbuf, 0);
 				fclose(fp);
 				continue;
 			}
@@ -278,6 +279,9 @@ void *connection_handler(void *sockfd) {
 				strcat(sendbuf, length);
 				if (connection == 1) {
 					strcat(sendbuf, "Connection: keep-alive");
+				}
+				else {
+					strcat(sendbuf, "Connection: close");
 				}
 				strcat(sendbuf, "\r\n\r\n");
 				write(cnfd, sendbuf, strlen(sendbuf) + 1);
