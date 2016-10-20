@@ -268,7 +268,7 @@ void *connection_handler(void *sockfd) {
 				strcat(sendbuf, "\n");
 				char length[40] = "";
 				fseek(fp, 0, SEEK_END);
-				int filelen = (int)ftell(fp)
+				int filelen = (int)ftell(fp);
 				sprintf(length, "Content-Length: %d\n", filelen);
 				rewind(fp);
 				strcat(sendbuf, length);
