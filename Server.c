@@ -119,8 +119,12 @@ void *connection_handler(void *sockfd) {
 			char content[BUFSIZE] = "";
 			char * past;
 			while (pch != NULL) {
-
+				past = pch;
+				pch = strtok(NULL,"\r\n\r\n");
 			}
+			strcpy(content,past);
+			strcat(file
+			File *fp = open(filename,
 		}*/
 		while (pch != NULL) {
 			pch = strtok(NULL, ": \n\r");
@@ -168,7 +172,6 @@ void *connection_handler(void *sockfd) {
 				strcat(sendbuf, connection);
 				strcat(sendbuf, error_message);
 				write(cnfd, sendbuf, strlen(sendbuf)+1);
-				puts(sendbuf);
 				continue;
 			}
 			else if (strlen(filename) != 0 && filename[strlen(filename) - 1] == '/'&& (strcmp(HTTP, "HTTP/1.1") == 0 || strcmp(HTTP, "HTTP/1.0") == 0))
@@ -203,19 +206,6 @@ void *connection_handler(void *sockfd) {
 				fclose(fp);
 				continue;
 			}
-			/*else if {
-				
-				if (strcmp(pch, "HTTP/1.1") == 0) {
-					strcpy(sendbuf, "HTTP/1.1 404 Not Found \r\n\r\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :");
-				}
-				else {
-					strcpy(sendbuf, "HTTP/1.0 404 Not Found \r\n\r\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :");
-
-				}
-				strcat(sendbuf, filename);
-				strcat(sendbuf, "< / body>< / html>\r");
-				write(cnfd, sendbuf, strlen(buf) + 1);
-			}*/
 			else if (strcmp(HTTP, "HTTP/1.1") != 0 && strcmp(HTTP, "HTTP/1.0") != 0) {
 				strcpy(buf, "HTTP/1.1 400 Bad Request\n");
 				char error_message[400] = "<html><body>400 Bad Request Reason: Invalid HTTP:";
@@ -250,7 +240,7 @@ void *connection_handler(void *sockfd) {
 						//puts(type);
 						
 					}//puts(ContentType[x][1]);
-					n++;
+					x++;
 				}
 				//puts(type);
 				FILE* fp = fopen(filepath, "r");
@@ -349,6 +339,9 @@ int set_config()
 				strcpy(ContentType[ntype++][0], pch+1);
 				pch = strtok(NULL, " ");
 				strcpy(ContentType[ntype++][1], pch);
+				if (strlen(ContentType[ntype][1]) != 0)
+					ContentType[ntype][1][strlen(ContentType[ntype][1]) - 1] = '\0';
+	
 			}
 			else if (strcmp(pch, "KeepaliveTime") == 0) {
 				pch = strtok(NULL, " ");
