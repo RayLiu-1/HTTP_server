@@ -227,7 +227,8 @@ int set_config()
 			}
 			else if (strcmp(pch, "DirectoryIndex") == 0) {
 				pch = strtok(NULL, "");
-				strcpy(WebPage[nIndex++], pch);
+				while(pch!=NULL)
+					strcpy(WebPage[nIndex++], pch);
 			}
 			else if (pch[0] == '.') {
 				strcpy(ContentType[ntype++][0], pch+1);
