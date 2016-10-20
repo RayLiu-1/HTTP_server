@@ -91,7 +91,6 @@ void *connection_handler(void *sockfd) {
 		//Send the message back to client
 		n = recv(cnfd, buf, BUFSIZE, 0);
 		//pch = strtok(buf)
-		printf("%d\n", n);
 		if (n == -1) {
 			puts("Time out");
 			fflush(stdout);
@@ -118,8 +117,9 @@ void *connection_handler(void *sockfd) {
 			if (strcmp(pch, "Connection") == 0) {
 				pch = strtok(NULL, ": \n");
 				puts(pch);
-				if (strcmp(pch, "Keep-alive") == 0) {
+				if (strcmp(pch, "keep-alive") == 0) {
 					connection = 1;
+					break;
 				}
 			}
 		}
