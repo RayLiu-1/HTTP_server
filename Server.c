@@ -148,13 +148,16 @@ void *connection_handler(void *sockfd) {
 				strcat(filepath, "/");
 				strcat(filepath, WebPage[0]);
 				FILE* fp = fopen(filepath, "r");
+				if (fp) {
+					puts("filepath");
+				}
 				strcpy(sendbuf, HTTP);
 				strcpy(sendbuf, "200 OK\n");
 				char type[40] = "Content-Type: text/html\n";
 				strcpy(sendbuf, type);
 				char length[40] = "";
 				fseek(fp, 0, SEEK_END);
-				sprintf(length, "Content-Length: %d\n", ftell(fp));
+				sprintf(length, "Content-Length: %d\n", (int) ftell(fp));
 				rewind(fp);
 				if (connection == 1) {
 					strcpy(sendbuf, "Connection: Keep-alive");
