@@ -91,6 +91,7 @@ void *connection_handler(void *sockfd) {
 		}*/
 		//Send the message back to client
 		memset(buf, 0, BUFSIZE);
+		put("asdasddasdasdad");
 		n = recv(cnfd, buf, BUFSIZE, 0);
 		puts(buf);
 		//pch = strtok(buf)
