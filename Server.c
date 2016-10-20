@@ -110,6 +110,11 @@ void *connection_handler(void *sockfd) {
 		char request[100];
 		if(pch!=NULL)
 			strcpy(request, pch);
+		else {
+			char error_message[100] = "HTTP / 1.1 500 Internal Server Error : cannot allocate memory";
+			write(cnfd, error_message, strlen(error_message) + 1);
+			continue
+		}
 		pch = strtok(NULL, " \n\r");
 		strcpy(filename, pch);
 		pch = strtok(NULL, " \n\r");
@@ -136,6 +141,7 @@ void *connection_handler(void *sockfd) {
 					pch = strtok(NULL, ": \r\n");
 					if (pch != NULL) {
 						if (strcmp(pch, "keep-alive") == 0) {
+							puts("connection");
 							connection = 1;
 							timeout.tv_sec = KeepaliveTime;
 							timeout.tv_usec = 0;
@@ -295,7 +301,6 @@ void *connection_handler(void *sockfd) {
 				int read = 0;
 				do {
 					read = fread(sendbuf, 1, BUFSIZE, (FILE *)fp);
-					printf("%d\n", read);
 					write(cnfd, sendbuf, read);
 				} while (read == BUFSIZE);
 				write(cnfd, sendbuf, 0);
@@ -303,11 +308,27 @@ void *connection_handler(void *sockfd) {
 				continue;
 			}
 		}
-		/*else if (strcmp(request, "POST") == 0) {
-			while(n = )
-		}*/
+		else if(strcmp(request, "GET") != 0){
+			strcpy(sendbuf, HTTP);
+			strcat(sendbuf, " 400 Bad Request\n");
+			char error_message[400] = "<html><body>400 Bad Request Reason: Invalid Method:";
+			strcat(error_message, request);
+			strcat(error_message, "\n</body></html>\n");
+			char connection[40] = "Connection: Close\r\n\r\n";
+			char length[40] = "";
+			char type[40] = "Content-Type: text/html\n";
+			sprintf(length, "Content-Length: %d\n", strlen(error_message));
+			strcat(sendbuf, type);
+			strcat(sendbuf, length);
+			strcat(sendbuf, connection);
+			strcat(sendbuf, error_message);
+			write(cnfd, sendbuf, strlen(sendbuf) + 1);
+			continue;
+		}
 		else {
-			int a = 0;
+			char error_message[100] = "HTTP / 1.1 500 Internal Server Error : cannot allocate memory";
+			write(cnfd, error_message, strlen(error_message) + 1);
+			continue;
 		}
 	} while (connection==1); 
 	if (n == 0) {
