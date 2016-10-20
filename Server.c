@@ -320,7 +320,7 @@ int set_config()
 			}
 			else if (pch[0] == '.') {
 				strcpy(ContentType[ntype++][0], pch+1);
-				pch = strtok(NULL, " ");
+				pch = strtok(NULL, " \n");
 				strcpy(ContentType[ntype++][1], pch);
 			}
 			else if (strcmp(pch, "KeepaliveTime") == 0) {
