@@ -174,6 +174,7 @@ void *connection_handler(void *sockfd) {
 					write(cnfd, sendbuf, strlen(sendbuf) + 1);
 				}
 				fclose(fp);
+				continue;
 			}
 			else{
 				/*strcpy(filepath, DocumentRoot);
