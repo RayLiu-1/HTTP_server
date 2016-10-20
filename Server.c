@@ -182,7 +182,7 @@ void *connection_handler(void *sockfd) {
 				write(cnfd, buf, strlen(buf) + 1);
 			}
 			pch = strtok(NULL, " ");
-			if (strcmp(pch, "HTTP/1.1") != 0 && strcmp(pch, "HTTP/1.0") != 0) {
+			if (strcmp(HTTP, "HTTP/1.1") != 0 && strcmp(HTTP, "HTTP/1.0") != 0) {
 				strcpy(buf,"HTTP/1.1 400 Bad Request\n<other-headers>\n<html><body>400 Bad Request Reason: Invalid HTTP-Version: <<req version>></body></html>\r");
 				write(cnfd, buf, strlen(buf)+1);
 			}
