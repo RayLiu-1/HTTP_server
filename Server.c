@@ -190,7 +190,6 @@ void *connection_handler(void *sockfd) {
 				}
 				strcat(sendbuf, "\r\n\r\n");
 				write(cnfd, sendbuf, strlen(sendbuf) + 1);
-				puts(sendbuf);
 				memset(sendbuf, 0, BUFSIZE);
 				while (fgets(sendbuf, BUFSIZE, (FILE*)fp)!=NULL) {
 					write(cnfd, sendbuf, strlen(sendbuf) + 1);
@@ -229,6 +228,7 @@ void *connection_handler(void *sockfd) {
 				continue;
 			}
 			else {
+				memset(sendbuf, 0, BUFSIZE + 1);
 				strcpy(filepath, DocumentRoot);
 				strcat(filepath, filename);
 				puts(filepath);
@@ -238,7 +238,8 @@ void *connection_handler(void *sockfd) {
 				int n = 0;
 				while (n < 20) {
 					if (strcmp(ContentType[n][0], pchar) == 0)
-						strcpy(type, ContentType[n++][1]);
+						strcpy(type, ContentType[n][1]);
+					n++;
 				}
 				
 				FILE* fp = fopen(filepath, "r");
