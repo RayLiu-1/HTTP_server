@@ -178,6 +178,8 @@ void *connection_handler(void *sockfd) {
 				while (fgets(sendbuf, BUFSIZE, (FILE*)fp)) {
 					write(cnfd, sendbuf, strlen(sendbuf) + 1);
 				}
+				fclose(fp);
+				puts("test");
 			}
 			else{
 				/*strcpy(filepath, DocumentRoot);
@@ -213,7 +215,6 @@ void *connection_handler(void *sockfd) {
 	} while (connection==1); 
 	
 	free(sockfd);
-	puts("exit");
 	pthread_exit(0);
 }
 
