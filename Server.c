@@ -93,7 +93,7 @@ void *connection_handler(void *sockfd) {
 		memset(buf, 0, BUFSIZE);
 		
 		n = recv(cnfd, buf, BUFSIZE, 0);
-		pch = strtok(buf)
+		puts(buf);
 		if (n == -1) {
 			puts("Time out");
 			fflush(stdout);
