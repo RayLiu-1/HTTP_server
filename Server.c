@@ -240,6 +240,8 @@ void *connection_handler(void *sockfd) {
 					if (strcmp(ContentType[n][0], pchar) == 0)
 					{
 						strcpy(type, ContentType[n][1]);
+						puts(type);
+						puts(ContentType[n][1]);
 					}
 					n++;
 				}
@@ -287,6 +289,9 @@ void *connection_handler(void *sockfd) {
 				continue;
 			}
 		}
+		/*else if (strcmp(request, "POST") == 0) {
+			while(n = )
+		}*/
 	} while (connection==1); 
 	if (n == 0) {
 		puts("Client disconnected");
