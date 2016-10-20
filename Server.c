@@ -85,10 +85,10 @@ void *connection_handler(void *sockfd) {
 	int connection = 0;
 	do{
 		//printf("%d\n", timeout.tv_sec);
-		if (setsockopt(cnfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
+		/*if (setsockopt(cnfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
 		{
 			printf("unable to set socket");
-		}
+		}*/
 		//Send the message back to client
 		n = recv(cnfd, buf, BUFSIZE, 0);
 		//pch = strtok(buf)
