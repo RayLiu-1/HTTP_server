@@ -197,12 +197,18 @@ void *connection_handler(void *sockfd) {
 					strcat(sendbuf, "Connection: keep-alive");
 					connection =1;
 				}
+				else {
+					strcat(sendbuf, "Connection: close");
+				}
 				strcat(sendbuf, "\r\n\r\n");
 				write(cnfd, sendbuf, strlen(sendbuf) + 1);
 				memset(sendbuf, 0, BUFSIZE);
-				while (fgets(sendbuf, BUFSIZE, (FILE*)fp)!=NULL) {
-					write(cnfd, sendbuf, strlen(sendbuf) + 1);
-				}
+				int read = 0;
+				do {
+					read = fread(sendbuf, 1, BUFSIZE, (FILE *)fp);
+					printf("%d\n", read);
+					write(cnfd, sendbuf, read + 1);
+				} while (read == BUFSIZE);
 				fclose(fp);
 				continue;
 			}
