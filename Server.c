@@ -108,7 +108,7 @@ void *connection_handler(void *sockfd) {
 		char HTTP[100];
 		char request[100];
 		strcpy(request, pch);
-		pch = strtok(NULL, " ");
+		pch = strtok(NULL, " \n");
 		strcpy(filename, pch);
 		pch = strtok(NULL, " \n");
 		strcpy(HTTP, pch);
