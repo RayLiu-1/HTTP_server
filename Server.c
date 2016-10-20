@@ -145,21 +145,24 @@ void *connection_handler(void *sockfd) {
 			strcat(file
 			File *fp = open(filename,
 		}*/
-		while (pch != NULL) {
-			pch = strtok(NULL, ": \n\r");
-			if(pch !=NULL)
-			{
-				if (strcmp(pch, "Connection") == 0) {
-					pch = strtok(NULL, ": \r\n");
-					if (pch != NULL) {
-						if (strcmp(pch, "keep-alive") == 0) {
-							puts("connection");
-							connection = 1;
-							timeout.tv_sec = KeepaliveTime;
-							timeout.tv_usec = 0;
-							if (setsockopt(cnfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
-							{
-								printf("unable to set socket");
+		if (connection != 3)
+		{
+			while (pch != NULL) {
+				pch = strtok(NULL, ": \n\r");
+				if (pch != NULL)
+				{
+					if (strcmp(pch, "Connection") == 0) {
+						pch = strtok(NULL, ": \r\n");
+						if (pch != NULL) {
+							if (strcmp(pch, "keep-alive") == 0) {
+								puts("connection");
+								connection = 1;
+								timeout.tv_sec = KeepaliveTime;
+								timeout.tv_usec = 0;
+								if (setsockopt(cnfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
+								{
+									printf("unable to set socket");
+								}
 							}
 						}
 					}
@@ -269,7 +272,6 @@ void *connection_handler(void *sockfd) {
 					}//puts(ContentType[x][1]);
 					x++;
 				}
-				puts(type);
 				FILE* fp = fopen(filepath, "r");
 				if (!fp) {
 					memset(sendbuf, 0, BUFSIZE + 1);
