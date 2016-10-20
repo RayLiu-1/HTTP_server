@@ -106,7 +106,6 @@ void *connection_handler(void *sockfd) {
 		if (n == -1) {
 			pch = strtok(lastbuf, " ");
 			connection = 3;
-			break;
 		}
 		else {
 			strcpy(lastbuf, buf);
