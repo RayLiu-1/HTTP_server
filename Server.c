@@ -108,12 +108,15 @@ void *connection_handler(void *sockfd) {
 		char HTTP[100];
 		char request[100];
 		strcpy(request, pch);
-		pch = strtok(NULL, " \n");
+		pch = strtok(NULL, " \n\r");
 		strcpy(filename, pch);
-		pch = strtok(NULL, " \n");
-		strcpy(HTTP, pch);
+		pch = strtok(NULL, " \n\r");
+		if(strcmp(pch,"HTTP/1.1")==0)
+			strcpy(HTTP, "HTTP/1.1");
+		else if(strcmp(pch, "HTTP/1.0") == 0)
+			strcpy(HTTP, "HTTP/1.0");
 		while (pch != NULL) {
-			pch = strtok(NULL, ": \n");
+			pch = strtok(NULL, ": \n\r");
 			if (strcmp(pch, "Connection") == 0) {
 				pch = strtok(NULL, ": \r\n");
 				if (pch != NULL) {
