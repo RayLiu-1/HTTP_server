@@ -280,7 +280,7 @@ void *connection_handler(void *sockfd) {
 				write(cnfd, sendbuf, strlen(sendbuf) + 1);
 				//puts(sendbuf);
 				memset(sendbuf, 0, BUFSIZE);
-				int read = 0
+				int read = 0;
 				while ((rend = fread(sendbuf, BUFSIZE,(FILE *)fp)) != 0) {
 					printf("%d\n", read);
 						write(cnfd, sendbuf, read);
