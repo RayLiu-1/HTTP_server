@@ -109,20 +109,21 @@ void *connection_handler(void *sockfd) {
 		char HTTP[100];
 		char request[100];
 		strcpy(request, pch);
-		pch = strtok(NULL, " ");
+		pch = strtok(NULL, " \n");
 		strcpy(filename, pch);
-		pch = strtok(NULL, " ");
+		puts(filename);
+		pch = strtok(NULL, " \n");
 		strcpy(HTTP, pch);
-		while (pch != NULL) {
-			pch = strtok(NULL, ": ");
+		while (pch != NULL) {puts("pch");
+			pch = strtok(NULL, ": \n");
 			if (strcmp(pch, "Connection") == 0) {
-				pch = strtok(NULL, ": ");
+				pch = strtok(NULL, ": \n");
 				if (strcmp(pch, "Keep-alive") == 0) {
 					connection = 1;
 				}
 			}
 		}
-		puts("pch");
+		
 		if (strcmp(request, "GET") == 0 ) {
 			if (strlen(filename) == 0 || filename[0] != '/') {
 				strcpy(sendbuf, HTTP);
