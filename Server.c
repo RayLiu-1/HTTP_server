@@ -90,8 +90,9 @@ void *connection_handler(void *sockfd) {
 			printf("unable to set socket");
 		}*/
 		//Send the message back to client
-		memset(buf, 0, BUFSIZE);
 		puts("asdasddasdasdad");
+		memset(buf, 0, BUFSIZE);
+		
 		n = recv(cnfd, buf, BUFSIZE, 0);
 		puts(buf);
 		//pch = strtok(buf)
