@@ -247,12 +247,12 @@ void *connection_handler(void *sockfd) {
 					if (strcmp(ContentType[x][0], pchar) == 0)
 					{
 						strcpy(type, ContentType[x][1]);
-						puts(type);
+						//puts(type);
 						
 					}puts(ContentType[x][1]);
 					n++;
 				}
-				puts(type);
+				//puts(type);
 				FILE* fp = fopen(filepath, "r");
 				if (!fp) {
 					strcpy(sendbuf, HTTP);
