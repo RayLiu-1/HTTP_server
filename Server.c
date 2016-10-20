@@ -80,8 +80,8 @@ void *connection_handler(void *sockfd) {
 	int pipeline = 0;
 	int n = 0;
 	int cnfd = *(int*)sockfd;
-	char buf[BUFSIZE];
-	char sendbuf[BUFSIZE];
+	char buf[BUFSIZE+1];
+	char sendbuf[BUFSIZE+1];
 	int connection = 0;
 	do{
 		//printf("%d\n", timeout.tv_sec);
