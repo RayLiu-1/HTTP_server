@@ -92,12 +92,14 @@ void *connection_handler(void *sockfd) {
 		//Send the message back to client
 		memset(buf, 0, BUFSIZE);
 		n = recv(cnfd, buf, BUFSIZE, 0);
-		puts(buf);
 		//pch = strtok(buf)
 		if (n == -1) {
 			puts("Time out");
 			fflush(stdout);
 			break;
+		}
+		if (n == 0) {
+			continue;
 		}
 		char* pch;
 		pch = strtok(buf," ");
@@ -265,8 +267,8 @@ void *connection_handler(void *sockfd) {
 					strcat(sendbuf, connection);
 					strcat(sendbuf, error_message);
 					write(cnfd, sendbuf, strlen(sendbuf));
-					puts("duan");
 					fclose(fp);
+					puts("duan");
 					continue;
 				}
 				strcpy(sendbuf, "");
