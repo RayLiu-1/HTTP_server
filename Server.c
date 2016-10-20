@@ -276,13 +276,11 @@ void *connection_handler(void *sockfd) {
 					strcat(sendbuf, "Connection: keep-alive");
 				}
 				strcat(sendbuf, "\r\n\r\n");
-				puts(sendbuf);
 				write(cnfd, sendbuf, strlen(sendbuf) + 1);
-				//puts(sendbuf);
 				memset(sendbuf, 0, BUFSIZE);
 				int read = 0;
 				do {
-					read = fread(sendbuf, BUFSIZE, 1, (FILE *)fp);
+					read = fread(sendbuf, 1, BUFSIZE, (FILE *)fp);
 					printf("%d\n", read);
 					write(cnfd, sendbuf, read);
 				} while (read == BUFSIZE);
