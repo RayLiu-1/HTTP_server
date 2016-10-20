@@ -96,6 +96,7 @@ void *connection_handler(void *sockfd) {
 		while (n != 0) {
 			char newbuf[100] = "";
 			n = recv(cnfd, newbuf, BUFSIZE, 0);
+			puts(newbuf);
 			strcat(buf, newbuf);
 		}
 		puts(buf);
