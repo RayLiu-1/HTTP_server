@@ -81,6 +81,7 @@ void *connection_handler(void *sockfd) {
 	int cnfd = *(int*)sockfd;
 	char buf[BUFSIZE];
 	char sendbuf[BUFSIZE];
+	int connection = 0;
 	do{
 		//printf("%d\n", timeout.tv_sec);
 		if (setsockopt(cnfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
@@ -112,7 +113,6 @@ void *connection_handler(void *sockfd) {
 		strcpy(filename, pch);
 		pch = strtok(NULL, " ");
 		strcpy(HTTP, pch);
-		int connection = 0;
 		while (pch != NULL) {
 			pch = strtok(NULL, ": ");
 			if (strcmp(pch, "Connection") == 0) {
@@ -147,7 +147,7 @@ void *connection_handler(void *sockfd) {
 				strcpy(filepath, DocumentRoot);
 				strcat(filepath, "/");
 				strcat(filepath, WebPage[0]);
-				FILE* fp = open(filepath, "r");
+				FILE* fp = fopen(filepath, "r");
 				strcpy(sendbuf, HTTP);
 				strcpy(sendbuf, "200 OK\n");
 				char type[40] = "Content-Type: text/html\n";
