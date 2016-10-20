@@ -281,10 +281,11 @@ void *connection_handler(void *sockfd) {
 				//puts(sendbuf);
 				memset(sendbuf, 0, BUFSIZE);
 				int read = 0;
-				while ((read = fread(sendbuf, BUFSIZE,1,(FILE *)fp)) != 0) {
+				do {
+					read = fread(sendbuf, BUFSIZE, 1, (FILE *)fp));
 					printf("%d\n", read);
-						write(cnfd, sendbuf, read);
-				}
+					write(cnfd, sendbuf, read);
+				} while (read != BUFSIZE);
 				fclose(fp);
 				continue;
 			}
