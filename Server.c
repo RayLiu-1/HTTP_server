@@ -93,6 +93,11 @@ void *connection_handler(void *sockfd) {
 		memset(buf, 0, BUFSIZE);
 		
 		n = recv(cnfd, buf, BUFSIZE, 0);
+		while (n != 0) {
+			char newbuf[100] = "";
+			n = recv(cnfd, newbuf, BUFSIZE, 0);
+			strcat(buf, newbuf);
+		}
 		puts(buf);
 		if (n == -1) {
 			puts("Time out");
