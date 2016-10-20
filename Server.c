@@ -222,19 +222,19 @@ int set_config()
 				printf("Set listen port:%d\n", ListenPort);
 			}
 			else if (strcmp(pch, "DocumentRoot")==0) {
-				pch = strtok(NULL, "");
+				pch = strtok(NULL, " ");
 				strcpy(DocumentRoot, pch);
 			}
 			else if (strcmp(pch, "DirectoryIndex") == 0) {
 				while (pch != NULL &&pch[0] != '\n'&&pch[0] != '\0') {
 					puts(pch);
-					pch = strtok(NULL, "");
+					pch = strtok(NULL, " ");
 					strcpy(WebPage[nIndex++], pch);
 				}
 			}
 			else if (pch[0] == '.') {
 				strcpy(ContentType[ntype++][0], pch+1);
-				pch = strtok(NULL, "");
+				pch = strtok(NULL, " ");
 				strcpy(ContentType[ntype++][1], pch);
 			}
 			else if (strcmp(pch, "KeepaliveTime") == 0) {
