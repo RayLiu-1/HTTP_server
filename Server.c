@@ -248,7 +248,7 @@ void *connection_handler(void *sockfd) {
 					{
 						strcpy(type, ContentType[x][1]);
 						puts(type);
-						);
+						
 					}puts(ContentType[x][1]);
 					n++;
 				}
