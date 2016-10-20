@@ -156,7 +156,8 @@ void *connection_handler(void *sockfd) {
 				}
 				puts(HTTP);
 				strcat(sendbuf, HTTP);
-				strcat(sendbuf, "200 OK\n");
+				puts(sendbuf);
+				strcat(sendbuf, " 200 OK\n");
 				char type[40] = "Content-Type: text/html\n";
 				strcat(sendbuf, type);
 				char length[40] = "";
