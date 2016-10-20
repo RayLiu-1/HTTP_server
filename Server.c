@@ -226,9 +226,10 @@ int set_config()
 				strcpy(DocumentRoot, pch);
 			}
 			else if (strcmp(pch, "DirectoryIndex") == 0) {
-				pch = strtok(NULL, "");
-				while(pch!=NULL)
+				while (pch != NULL) {
+					pch = strtok(NULL, "");
 					strcpy(WebPage[nIndex++], pch);
+				}
 			}
 			else if (pch[0] == '.') {
 				strcpy(ContentType[ntype++][0], pch+1);
