@@ -238,11 +238,10 @@ void *connection_handler(void *sockfd) {
 					{
 						strcpy(type, ContentType[x][1]);
 						//puts(type);
-						
 					}//puts(ContentType[x][1]);
 					x++;
 				}
-				//puts(type);
+				puts(type);
 				FILE* fp = fopen(filepath, "r");
 				if (!fp) {
 					strcpy(sendbuf, HTTP);
