@@ -336,12 +336,12 @@ int set_config()
 				}
 			}
 			else if (pch[0] == '.') {
-				strcpy(ContentType[ntype++][0], pch+1);
+				strcpy(ContentType[ntype][0], pch+1);
 				pch = strtok(NULL, " ");
-				strcpy(ContentType[ntype++][1], pch);
+				strcpy(ContentType[ntype][1], pch);
 				if (strlen(ContentType[ntype][1]) != 0)
 					ContentType[ntype][1][strlen(ContentType[ntype][1]) - 1] = '\0';
-	
+				ntype++;
 			}
 			else if (strcmp(pch, "KeepaliveTime") == 0) {
 				pch = strtok(NULL, " ");
