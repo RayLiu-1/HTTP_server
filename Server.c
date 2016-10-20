@@ -230,14 +230,18 @@ void *connection_handler(void *sockfd) {
 				memset(sendbuf, 0, BUFSIZE + 1);
 				strcpy(filepath, DocumentRoot);
 				strcat(filepath, filename);
-				
+				char filename1[40];
+				strcpy(filename1, filename);
 				char * pchar = strtok(filename, ".");
 				pchar = strtok(NULL, ".");
 				char type[40] = "";
 				int n = 0;
 				while (n < 20) {
 					if (strcmp(ContentType[n][0], pchar) == 0)
+					{
+						puts(ContentType[n][0]);
 						strcpy(type, ContentType[n][1]);
+					}
 					puts(ContentType[n][0]);
 					n++;
 				}
@@ -247,7 +251,7 @@ void *connection_handler(void *sockfd) {
 					strcpy(sendbuf, HTTP);
 					strcat(sendbuf, " 404 Not Found\n");
 					char error_message[400] = "<html><body>404 Not Found Reason URL does not exist:";
-					strcat(error_message, filename);
+					strcat(error_message, filename1);
 					strcat(error_message, "\n</body></html>\n");
 					char connection[40] = "Connection: Close\r\n\r\n";
 					char length[40] = "";
