@@ -91,7 +91,7 @@ void *connection_handler(void *sockfd) {
 		}*/
 		//Send the message back to client
 		memset(buf, 0, BUFSIZE);
-		puts("duan");
+		
 		n = recv(cnfd, buf, BUFSIZE, 0);
 		//pch = strtok(buf)
 		if (n == -1) {
@@ -269,7 +269,6 @@ void *connection_handler(void *sockfd) {
 					strcat(sendbuf, connection);
 					strcat(sendbuf, error_message);
 					write(cnfd, sendbuf, strlen(sendbuf));
-					fclose(fp);
 					puts("duan");
 					continue;
 				}
