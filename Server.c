@@ -153,7 +153,8 @@ void *connection_handler(void *sockfd) {
 				if (!fp) {
 					perror("Open file failed");
 				}
-				strcpy(sendbuf, HTTP);
+				strcpy(sendbuf, "");
+				strcat(sendbuf, HTTP);
 				printf("HTTP length %d", strlen(HTTP));
 				strcat(sendbuf, " 200 OK\n");
 				char type[40] = "Content-Type: text/html\n";
@@ -172,7 +173,7 @@ void *connection_handler(void *sockfd) {
 				memset(sendbuf, 0, BUFSIZE);
 				while (fgets(sendbuf, BUFSIZE, (FILE*)fp)) {
 					write(cnfd, sendbuf, BUFSIZE);
-					puts(sendbuf);
+					printf(sendbuf);
 				}
 			}
 			else{
