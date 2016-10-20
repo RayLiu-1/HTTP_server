@@ -212,7 +212,7 @@ void *connection_handler(void *sockfd) {
 	} while (connection==1); 
 	
 	free(sockfd);
-	pthread_exit();
+	pthread_exit(0);
 }
 
 int set_config()
