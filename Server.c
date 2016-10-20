@@ -115,7 +115,7 @@ void *connection_handler(void *sockfd) {
 		while (pch != NULL) {puts(pch);
 			pch = strtok(NULL, ": \n");
 			if (strcmp(pch, "Connection") == 0) {
-				pch = strtok(NULL, ": \n");
+				pch = strtok(NULL, ": \r\n");
 				puts(pch);
 				if (strcmp(pch, "keep-alive") == 0) {
 					connection = 1;
