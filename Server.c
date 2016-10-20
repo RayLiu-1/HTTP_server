@@ -275,6 +275,7 @@ void *connection_handler(void *sockfd) {
 					strcat(sendbuf, "Connection: keep-alive");
 				}
 				strcat(sendbuf, "\r\n\r\n");
+				puts(sendbuf);
 				write(cnfd, sendbuf, strlen(sendbuf) + 1);
 				//puts(sendbuf);
 				memset(sendbuf, 0, BUFSIZE);
