@@ -92,7 +92,6 @@ void *connection_handler(void *sockfd) {
 		//Send the message back to client
 		memset(buf, 0, BUFSIZE);
 		n = recv(cnfd, buf, BUFSIZE, 0);
-		puts(buf);
 		if (n == 0) {
 			break;
 		}
@@ -236,10 +235,11 @@ void *connection_handler(void *sockfd) {
 				pchar = strtok(NULL, ".");
 				char type[40] = "";
 				int n = 0;
-				//puts(pchar);
+				puts(pchar);
 				while (n < 20) {
 					if (strcmp(ContentType[n][0], pchar) == 0)
 						strcpy(type, ContentType[n][1]);
+					puts(ContentType[n][1]);
 					n++;
 				}
 				
