@@ -146,7 +146,7 @@ void *connection_handler(void *sockfd) {
 				puts(sendbuf);
 				continue;
 			}
-			else if (strlen(filename) != 0 && filename[strlen(filename) - 1] == '/')
+			else if (strlen(filename) != 0 && filename[strlen(filename) - 1] == '/'&& (strcmp(HTTP, "HTTP/1.1") == 0 || strcmp(HTTP, "HTTP/1.0") == 0))
 			{
 				strcpy(filepath, DocumentRoot);
 				strcat(filepath, "/");
@@ -179,9 +179,8 @@ void *connection_handler(void *sockfd) {
 				fclose(fp);
 				continue;
 			}
-			else{
-				/*strcpy(filepath, DocumentRoot);
-				strcat(filepath, pch);*/
+			/*else if {
+				
 				if (strcmp(pch, "HTTP/1.1") == 0) {
 					strcpy(sendbuf, "HTTP/1.1 404 Not Found \r\n\r\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :");
 				}
@@ -192,8 +191,8 @@ void *connection_handler(void *sockfd) {
 				strcat(sendbuf, filename);
 				strcat(sendbuf, "< / body>< / html>\r");
 				write(cnfd, sendbuf, strlen(buf) + 1);
-			}
-			if (strcmp(HTTP, "HTTP/1.1") != 0 && strcmp(HTTP, "HTTP/1.0") != 0) {
+			}*/
+			else if (strcmp(HTTP, "HTTP/1.1") != 0 && strcmp(HTTP, "HTTP/1.0") != 0) {
 				strcpy(buf,"HTTP/1.1 400 Bad Request\n<other-headers>\n<html><body>400 Bad Request Reason: Invalid HTTP-Version: <<req version>></body></html>\r");
 				write(cnfd, buf, strlen(buf)+1);
 			}
