@@ -168,7 +168,7 @@ void *connection_handler(void *sockfd) {
 				strcat(sendbuf, length);
 				if (connection == 1) {
 					strcat(sendbuf, "Connection: Keep-alive");
-					connection == 1
+					connection =1;
 				}
 				strcat(sendbuf, "\r\n\r\n");
 				write(cnfd, sendbuf, strlen(sendbuf) + 1);
@@ -212,7 +212,7 @@ void *connection_handler(void *sockfd) {
 	} while (connection==1); 
 	
 	free(sockfd);
-	return 0;
+	pthread_exit();
 }
 
 int set_config()
