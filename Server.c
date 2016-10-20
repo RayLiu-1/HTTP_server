@@ -172,7 +172,7 @@ void *connection_handler(void *sockfd) {
 				write(cnfd, sendbuf, strlen(sendbuf)+1);
 				continue;
 			}
-			else if (strlen(filename) != 0 && filename[strlen(filename) - 1] == '/'&& (strcmp(HTTP, "HTTP/1.1") == 0 || strcmp(HTTP, "HTTP/1.0") == 0))
+			else if (strlen(filename) == 1 && filename[strlen(filename) - 1] == '/'&& (strcmp(HTTP, "HTTP/1.1") == 0 || strcmp(HTTP, "HTTP/1.0") == 0))
 			{
 				memset(sendbuf, 0, BUFSIZE + 1);
 				strcpy(filepath, DocumentRoot);
@@ -250,6 +250,7 @@ void *connection_handler(void *sockfd) {
 				puts(type);
 				FILE* fp = fopen(filepath, "r");
 				if (!fp) {
+					memset(sendbuf, 0, BUFSIZE + 1);
 					strcpy(sendbuf, HTTP);
 					strcat(sendbuf, " 404 Not Found\n");
 					char error_message[400] = "<html><body>404 Not Found Reason URL does not exist:";
@@ -263,7 +264,7 @@ void *connection_handler(void *sockfd) {
 					strcat(sendbuf, length);
 					strcat(sendbuf, connection);
 					strcat(sendbuf, error_message);
-					write(cnfd, sendbuf, strlen(sendbuf) + 1);
+					write(cnfd, sendbuf, strlen(sendbuf));
 					continue;
 				}
 				strcpy(sendbuf, "");
