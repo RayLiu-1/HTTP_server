@@ -112,7 +112,7 @@ void *connection_handler(void *sockfd) {
 		strcpy(filename, pch);
 		pch = strtok(NULL, " \n");
 		strcpy(HTTP, pch);
-		while (pch != NULL) {puts(pch);
+		while (pch != NULL||'\n') {puts(pch);
 			pch = strtok(NULL, ": \n");
 			if (strcmp(pch, "Connection") == 0) {
 				pch = strtok(NULL, ": \r\n");
@@ -226,7 +226,7 @@ int set_config()
 				strcpy(DocumentRoot, pch);
 			}
 			else if (strcmp(pch, "DirectoryIndex") == 0) {
-				while (pch != NULL) {
+				while (pch != NULL &&pch != '\n'&&pch != '\0') {
 					pch = strtok(NULL, "");
 					strcpy(WebPage[nIndex++], pch);
 				}
