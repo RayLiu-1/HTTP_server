@@ -175,6 +175,7 @@ void *connection_handler(void *sockfd) {
 				memset(sendbuf, 0, BUFSIZE);
 				while (fgets(sendbuf, BUFSIZE, (FILE*)fp)) {
 					write(cnfd, sendbuf, strlen(sendbuf) + 1);
+					puts(sendbuf);
 				}
 				fclose(fp);
 				continue;
