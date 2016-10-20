@@ -92,7 +92,9 @@ void *connection_handler(void *sockfd) {
 		//Send the message back to client
 		memset(buf, 0, BUFSIZE);
 		n = recv(cnfd, buf, BUFSIZE, 0);
-		puts("buf");
+		if (n == 0) {
+			break;
+		}
 		//pch = strtok(buf)
 		if (n == -1) {
 			puts("Time out");
@@ -174,8 +176,6 @@ void *connection_handler(void *sockfd) {
 				memset(sendbuf, 0, BUFSIZE);
 				while (fgets(sendbuf, BUFSIZE, (FILE*)fp)!=NULL) {
 					write(cnfd, sendbuf, strlen(sendbuf) + 1);
-					puts(sendbuf);
-					puts("duancuowu");
 				}
 				fclose(fp);
 				continue;
