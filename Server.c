@@ -80,8 +80,8 @@ void *connection_handler(void *sockfd) {
 	int pipeline = 0;
 	int n = 0;
 	int cnfd = *(int*)sockfd;
-	char buf[BUFSIZE+1];
-	char sendbuf[BUFSIZE+1];
+	char buf[BUFSIZE];
+	char sendbuf[BUFSIZE];
 	int connection = 0;
 	do{
 		//printf("%d\n", timeout.tv_sec);
@@ -280,12 +280,12 @@ void *connection_handler(void *sockfd) {
 				write(cnfd, sendbuf, strlen(sendbuf) + 1);
 				//puts(sendbuf);
 				memset(sendbuf, 0, BUFSIZE);
-				while (fgets(sendbuf, BUFSIZE,fp) != NULL) {
+				while (fgets(sendbuf, BUFSIZE,(FILE *)fp) != NULL) {
 					puts("sendbuf");
 					if(filelen>BUFSIZE)
 						write(cnfd, sendbuf, BUFSIZE);
 					else
-						write(cnfd, sendbuf, filelen);
+						write(cnfd, sendbuf, filelen+1);
 					filelen -= BUFSIZE;
 					//printf("cnfd lenth %d", strlen(sendbuf));
 				}
@@ -296,6 +296,9 @@ void *connection_handler(void *sockfd) {
 		/*else if (strcmp(request, "POST") == 0) {
 			while(n = )
 		}*/
+		else {
+			int a = 0;
+		}
 	} while (connection==1); 
 	if (n == 0) {
 		puts("Client disconnected");
