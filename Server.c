@@ -209,7 +209,7 @@ void *connection_handler(void *sockfd) {
 	} while (connection==1); 
 	if (n == 0) {
 		puts("Client disconnected");
-		fflush(stdout);
+		//fflush(stdout);
 	}
 	free(sockfd);
 	pthread_exit(0);
