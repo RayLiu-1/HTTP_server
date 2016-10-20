@@ -108,12 +108,12 @@ void *connection_handler(void *sockfd) {
 		char HTTP[100];
 		char request[100];
 		strcpy(request, pch);
-		pch = strtok(NULL, " \n");
+		pch = strtok(NULL, " ");
 		strcpy(filename, pch);
-		pch = strtok(NULL, " \n");
+		pch = strtok(NULL, " ");
 		strcpy(HTTP, pch);
 		while (pch != NULL) {
-			pch = strtok(NULL, ": \n");
+			pch = strtok(NULL, ": ");
 			if (strcmp(pch, "Connection") == 0) {
 				pch = strtok(NULL, ": \r\n");
 				if (pch != NULL) {
@@ -180,14 +180,13 @@ void *connection_handler(void *sockfd) {
 				puts(buf);
 				write(cnfd, buf, strlen(buf) + 1);
 			}
-			pch = strtok(NULL, " ");
 			if (strcmp(HTTP, "HTTP/1.1") != 0 && strcmp(HTTP, "HTTP/1.0") != 0) {
 				strcpy(buf,"HTTP/1.1 400 Bad Request\n<other-headers>\n<html><body>400 Bad Request Reason: Invalid HTTP-Version: <<req version>></body></html>\r");
 				write(cnfd, buf, strlen(buf)+1);
 			}
 			else {
 				if (strcmp(pch, "HTTP/1.1") == 0) {
-					strcpy(buf, "HTTP/1.1 404 Not Found\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :<<requested url>></body></html>\r");
+					strcpy(sendbuf, "HTTP/1.1 404 Not Found \r\n\r\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :<<requested url>></body></html>\r");
 					puts(buf);
 					write(cnfd, buf, strlen(buf)+1);
 				}
