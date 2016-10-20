@@ -296,7 +296,7 @@ void *connection_handler(void *sockfd) {
 				do {
 					read = fread(sendbuf, 1, BUFSIZE, (FILE *)fp);
 					printf("%d\n", read);
-					write(cnfd, sendbuf, read+1);
+					write(cnfd, sendbuf, read);
 				} while (read == BUFSIZE);
 				write(cnfd, sendbuf, 0);
 				fclose(fp);
