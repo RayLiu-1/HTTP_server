@@ -152,7 +152,7 @@ void *connection_handler(void *sockfd) {
 				strcat(filepath, WebPage[0]);
 				FILE* fp = fopen(filepath, "r");
 				if (!fp) {
-					puts(filepath);
+					perror("Open file failed");
 				}
 				strcpy(sendbuf, HTTP);
 				strcpy(sendbuf, "200 OK\n");
@@ -167,9 +167,11 @@ void *connection_handler(void *sockfd) {
 				}
 				strcpy(sendbuf, "\r\n\r\n");
 				write(cnfd, sendbuf, strlen(sendbuf) + 1);
+				puts(sendbuf);
 				memset(sendbuf, 0, BUFSIZE);
 				while (fgets(sendbuf, BUFSIZE, (FILE*)fp)) {
 					write(cnfd, sendbuf, BUFSIZE);
+					puts(sendbuf);
 				}
 			}
 			else{
