@@ -135,7 +135,7 @@ void *connection_handler(void *sockfd) {
 				}
 			}
 		}
-		if (connextion == 0) {
+		if (connection == 0) {
 			timeout.tv_sec = 0;
 			timeout.tv_usec = 0;
 			if (setsockopt(cnfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0)
