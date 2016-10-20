@@ -151,7 +151,7 @@ void *connection_handler(void *sockfd) {
 				strcat(filepath, WebPage[0]);
 				FILE* fp = fopen(filepath, "r");
 				if (!fp) {
-					puts("filepath");
+					puts(filepath);
 				}
 				strcpy(sendbuf, HTTP);
 				strcpy(sendbuf, "200 OK\n");
