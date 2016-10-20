@@ -154,18 +154,18 @@ void *connection_handler(void *sockfd) {
 				if (!fp) {
 					perror("Open file failed");
 				}
-				strcpy(sendbuf, HTTP);
-				strcpy(sendbuf, "200 OK\n");
+				strcat(sendbuf, HTTP);
+				strcat(sendbuf, "200 OK\n");
 				char type[40] = "Content-Type: text/html\n";
-				strcpy(sendbuf, type);
+				strcat(sendbuf, type);
 				char length[40] = "";
 				fseek(fp, 0, SEEK_END);
 				sprintf(length, "Content-Length: %d\n", (int) ftell(fp));
 				rewind(fp);
 				if (connection == 1) {
-					strcpy(sendbuf, "Connection: Keep-alive");
+					strcat(sendbuf, "Connection: Keep-alive");
 				}
-				strcpy(sendbuf, "\r\n\r\n");
+				strcat(sendbuf, "\r\n\r\n");
 				write(cnfd, sendbuf, strlen(sendbuf) + 1);
 				puts(sendbuf);
 				memset(sendbuf, 0, BUFSIZE);
