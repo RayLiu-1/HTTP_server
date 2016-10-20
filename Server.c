@@ -226,10 +226,11 @@ int set_config()
 				strcpy(DocumentRoot, pch);
 			}
 			else if (strcmp(pch, "DirectoryIndex") == 0) {
-				while (pch != NULL&& strcmp(pch, "") != 0 && pch[0] != '\n'&&pch[0] != '\0') {
+				while (pch != NULL) {
 					puts(pch);
 					pch = strtok(NULL, " ");
-					strcpy(WebPage[nIndex++], pch);
+					if(pch!=NULL)
+						strcpy(WebPage[nIndex++], pch);
 				}
 				puts("pass");
 			}
