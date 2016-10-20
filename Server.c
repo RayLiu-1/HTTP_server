@@ -105,6 +105,7 @@ void *connection_handler(void *sockfd) {
 		
 		if (n == -1) {
 			puts("timeout");
+			return 0;
 			pch = strtok(lastbuf," ");
 			connection = 3;
 		}
@@ -112,7 +113,6 @@ void *connection_handler(void *sockfd) {
 			strcpy(lastbuf, buf);
 			pch = strtok(buf, " ");
 		}
-		puts(lastbuf);
 		if (n == 0) {
 			continue;
 		}
