@@ -112,7 +112,6 @@ void *connection_handler(void *sockfd) {
 		strcpy(filename, pch);
 		pch = strtok(NULL, " \n");
 		strcpy(HTTP, pch);
-		puts(HTTP);
 		while (pch != NULL) {
 			pch = strtok(NULL, ": \n");
 			if (strcmp(pch, "Connection") == 0) {
@@ -155,6 +154,7 @@ void *connection_handler(void *sockfd) {
 					perror("Open file failed");
 				}
 				strcpy(sendbuf, HTTP);
+				printf("HTTP length %d", strlen(HTTP));
 				strcat(sendbuf, " 200 OK\n");
 				char type[40] = "Content-Type: text/html\n";
 				strcat(sendbuf, type);
@@ -162,6 +162,7 @@ void *connection_handler(void *sockfd) {
 				fseek(fp, 0, SEEK_END);
 				sprintf(length, "Content-Length: %d\n", (int) ftell(fp));
 				rewind(fp);
+				strcat(sendbuf, length);
 				if (connection == 1) {
 					strcat(sendbuf, "Connection: Keep-alive");
 				}
