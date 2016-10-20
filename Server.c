@@ -235,7 +235,6 @@ void *connection_handler(void *sockfd) {
 				pchar = strtok(NULL, ".");
 				char type[40] = "";
 				int n = 0;
-				puts(pchar);
 				while (n < 20) {
 					if (strcmp(ContentType[n][0], pchar) == 0)
 						strcpy(type, ContentType[n][1]);
@@ -320,7 +319,7 @@ int set_config()
 			}
 			else if (pch[0] == '.') {
 				strcpy(ContentType[ntype++][0], pch+1);
-				pch = strtok(NULL, " \n");
+				pch = strtok(NULL, " \n\r");
 				strcpy(ContentType[ntype++][1], pch);
 			}
 			else if (strcmp(pch, "KeepaliveTime") == 0) {
