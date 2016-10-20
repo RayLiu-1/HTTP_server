@@ -233,10 +233,10 @@ void *connection_handler(void *sockfd) {
 				strcat(filepath, filename);
 				
 				char * pchar = strtok(filename, ".");
-				pchar = strtok(filename, ".");
+				pchar = strtok(NULL, ".");
 				char type[40] = "";
 				int n = 0;
-				puts(pchar);
+				//puts(pchar);
 				while (n < 20) {
 					if (strcmp(ContentType[n][0], pchar) == 0)
 						strcpy(type, ContentType[n][1]);
