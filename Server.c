@@ -244,7 +244,21 @@ void *connection_handler(void *sockfd) {
 				
 				FILE* fp = fopen(filepath, "r");
 				if (!fp) {
-					perror("Open file failed");
+					strcpy(sendbuf, HTTP);
+					strcat(sendbuf, " 404 Not Found\n");
+					char error_message[400] = "<html><body>404 Not Found Reason URL does not exist:";
+					strcat(error_message, filename);
+					strcat(error_message, "\n</body></html>\n");
+					char connection[40] = "Connection: Close\r\n\r\n";
+					char length[40] = "";
+					char type[40] = "Content-Type: text/html\n";
+					sprintf(length, "Content-Length: %d\n", strlen(error_message));
+					strcat(sendbuf, type);
+					strcat(sendbuf, length);
+					strcat(sendbuf, connection);
+					strcat(sendbuf, error_message);
+					write(cnfd, sendbuf, strlen(sendbuf) + 1);
+					continue;
 				}
 				strcpy(sendbuf, "");
 				strcat(sendbuf, HTTP);
