@@ -176,6 +176,7 @@ void *connection_handler(void *sockfd) {
 				while (fgets(sendbuf, BUFSIZE, (FILE*)fp)) {
 					write(cnfd, sendbuf, strlen(sendbuf) + 1);
 					puts(sendbuf);
+					puts("duancuowu");
 				}
 				fclose(fp);
 				continue;
