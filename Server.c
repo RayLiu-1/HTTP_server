@@ -231,6 +231,7 @@ int set_config()
 					pch = strtok(NULL, " ");
 					strcpy(WebPage[nIndex++], pch);
 				}
+				put("pass");
 			}
 			else if (pch[0] == '.') {
 				strcpy(ContentType[ntype++][0], pch+1);
