@@ -99,18 +99,17 @@ void *connection_handler(void *sockfd) {
 			puts(newbuf);
 			strcat(buf, newbuf);
 		}*/
-		
 		char* pch;
-		//puts(buf);
+		
 		if (n == -1) {
 			pch = strtok(lastbuf, " ");
 			connection = 3;
 			break;
 		}
+		puts(buf);
 		else {
 			strcpy(lastbuf, buf);
 			pch = strtok(buf, " ");
-			
 		}
 		memset(buf, 0, BUFSIZE);
 		if (n == 0) {
