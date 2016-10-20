@@ -146,7 +146,6 @@ void *connection_handler(void *sockfd) {
 			}
 			else if (strlen(filename) != 0 && filename[strlen(filename) - 1] == '/')
 			{
-				strcpy(sendbuf, "");
 				strcpy(filepath, DocumentRoot);
 				strcat(filepath, "/");
 				strcat(filepath, WebPage[0]);
@@ -154,9 +153,7 @@ void *connection_handler(void *sockfd) {
 				if (!fp) {
 					perror("Open file failed");
 				}
-				puts(HTTP);
-				strcat(sendbuf, HTTP);
-				puts(sendbuf);
+				strcpy(sendbuf, HTTP);
 				strcat(sendbuf, " 200 OK\n");
 				char type[40] = "Content-Type: text/html\n";
 				strcat(sendbuf, type);
