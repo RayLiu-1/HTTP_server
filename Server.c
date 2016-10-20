@@ -158,7 +158,6 @@ void *connection_handler(void *sockfd) {
 				}
 				strcpy(sendbuf, "");
 				strcat(sendbuf, HTTP);
-				printf("HTTP length %d", strlen(HTTP));
 				strcat(sendbuf, " 200 OK\n");
 				char type[40] = "Content-Type: text/html\n";
 				strcat(sendbuf, type);
@@ -169,14 +168,15 @@ void *connection_handler(void *sockfd) {
 				strcat(sendbuf, length);
 				if (connection == 1) {
 					strcat(sendbuf, "Connection: Keep-alive");
+					connection == 1
 				}
 				strcat(sendbuf, "\r\n\r\n");
 				write(cnfd, sendbuf, strlen(sendbuf) + 1);
 				puts(sendbuf);
 				memset(sendbuf, 0, BUFSIZE);
 				while (fgets(sendbuf, BUFSIZE, (FILE*)fp)) {
-					write(cnfd, sendbuf, BUFSIZE);
-					printf(sendbuf);
+					write(cnfd, sendbuf, strlen(cnfd)+1);
+					printf("%d%s"sendbuf);
 				}
 			}
 			else{
