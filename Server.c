@@ -173,6 +173,7 @@ void *connection_handler(void *sockfd) {
 			}
 			else if (strlen(filename) != 0 && filename[strlen(filename) - 1] == '/'&& (strcmp(HTTP, "HTTP/1.1") == 0 || strcmp(HTTP, "HTTP/1.0") == 0))
 			{
+				memset(sendbuf, 0, BUFSIZE + 1);
 				strcpy(filepath, DocumentRoot);
 				strcat(filepath, "/");
 				strcat(filepath, WebPage[0]);
@@ -199,7 +200,7 @@ void *connection_handler(void *sockfd) {
 				}
 				strcat(sendbuf, "\r\n\r\n");
 				write(cnfd, sendbuf, strlen(sendbuf) + 1);
-				memset(sendbuf, 0, BUFSIZE);
+				memset(sendbuf, 0, BUFSIZE+1);
 				int read = 0;
 				do {
 					read = fread(sendbuf, 1, BUFSIZE, (FILE *)fp);
