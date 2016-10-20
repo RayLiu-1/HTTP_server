@@ -284,6 +284,7 @@ void *connection_handler(void *sockfd) {
 					printf("%d\n", read);
 					write(cnfd, sendbuf, read+1);
 				} while (read == BUFSIZE);
+				write(cnfd, sendbuf, 0);
 				fclose(fp);
 				continue;
 			}
