@@ -269,7 +269,6 @@ void *connection_handler(void *sockfd) {
 					strcat(sendbuf, connection);
 					strcat(sendbuf, error_message);
 					write(cnfd, sendbuf, strlen(sendbuf));
-					puts("duan");
 					continue;
 				}
 				strcpy(sendbuf, "");
@@ -290,7 +289,7 @@ void *connection_handler(void *sockfd) {
 				else {
 					strcat(sendbuf, "Connection: close");
 				}
-				strcat(sendbuf, "\r\n\r\n");
+				strcat(sendbuf, "\r\n\r");
 				write(cnfd, sendbuf, strlen(sendbuf) + 1);
 				memset(sendbuf, 0, BUFSIZE+1);
 				int read = 0;
