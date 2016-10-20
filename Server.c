@@ -103,7 +103,7 @@ void *connection_handler(void *sockfd) {
 		char* pch;
 		//puts(buf);
 		if (n == -1) {
-			pch = strtok(buf, " ");
+			pch = strtok(lastbuf, " ");
 			connection = 3;
 			break;
 		}
@@ -112,14 +112,10 @@ void *connection_handler(void *sockfd) {
 			pch = strtok(buf, " ");
 			
 		}
-		
-
 		memset(buf, 0, BUFSIZE);
 		if (n == 0) {
 			continue;
 		}
-		
-		
 		char filepath[200];
 		char filename[100];
 		char HTTP[100];
