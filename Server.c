@@ -282,7 +282,7 @@ void *connection_handler(void *sockfd) {
 				memset(sendbuf, 0, BUFSIZE);
 				while (fgets(sendbuf, filelen,fp) != NULL) {
 					puts("sendbuf");
-					write(cnfd, sendbuf, filelen+1);
+					write(cnfd, sendbuf, filelen);
 					//printf("cnfd lenth %d", strlen(sendbuf));
 				}
 				fclose(fp);
