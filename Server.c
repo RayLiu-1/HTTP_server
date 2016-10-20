@@ -91,6 +91,8 @@ void *connection_handler(void *sockfd) {
 			printf("unable to set socket");
 		}*/
 		//Send the message back to client
+		memset(buf, 0, BUFSIZE);
+
 		n = recv(cnfd, buf, BUFSIZE, 0);
 		
 		/*while (n != 0) {
@@ -111,7 +113,6 @@ void *connection_handler(void *sockfd) {
 			pch = strtok(buf, " ");
 		}
 		puts(lastbuf);
-		memset(buf, 0, BUFSIZE);
 		if (n == 0) {
 			continue;
 		}
