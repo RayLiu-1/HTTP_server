@@ -112,6 +112,7 @@ void *connection_handler(void *sockfd) {
 		strcpy(filename, pch);
 		pch = strtok(NULL, " ");
 		strcpy(HTTP, pch);
+		put(HTTP);
 		while (pch != NULL) {
 			pch = strtok(NULL, ": ");
 			if (strcmp(pch, "Connection") == 0) {
@@ -176,9 +177,16 @@ void *connection_handler(void *sockfd) {
 			else{
 				/*strcpy(filepath, DocumentRoot);
 				strcat(filepath, pch);*/
-				strcpy(buf, "HTTP/1.1 404 Not Found\n<other-headers>\n<html><body>404 Not Found Reason URL does not exist :<<requested url>></body></html>\r");
-				puts(buf);
-				write(cnfd, buf, strlen(buf) + 1);
+				if (strcmp(pch, "HTTP/1.1") == 0) {
+					strcpy(sendbuf, "HTTP/1.1 404 Not Found \r\n\r\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :");
+				}
+				else {
+					strcpy(sendbuf, "HTTP/1.0 404 Not Found \r\n\r\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :");
+
+				}
+				strcat(sendbuf, filename);
+				strcat(sendbuf, "< / body>< / html>\r");
+				write(cnfd, sendbuf, strlen(buf) + 1);
 			}
 			if (strcmp(HTTP, "HTTP/1.1") != 0 && strcmp(HTTP, "HTTP/1.0") != 0) {
 				strcpy(buf,"HTTP/1.1 400 Bad Request\n<other-headers>\n<html><body>400 Bad Request Reason: Invalid HTTP-Version: <<req version>></body></html>\r");
@@ -186,10 +194,15 @@ void *connection_handler(void *sockfd) {
 			}
 			else {
 				if (strcmp(pch, "HTTP/1.1") == 0) {
-					strcpy(sendbuf, "HTTP/1.1 404 Not Found \r\n\r\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :<<requested url>></body></html>\r");
-					puts(buf);
-					write(cnfd, buf, strlen(buf)+1);
+					strcpy(sendbuf, "HTTP/1.1 404 Not Found \r\n\r\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :");
 				}
+				else {
+					strcpy(sendbuf, "HTTP/1.0 404 Not Found \r\n\r\n<!DOCTYPE html>\n<html><body>404 Not Found Reason URL does not exist :");
+
+				}
+				strcat(sendbuf, filename);
+				strcat(sendbuf, "< / body>< / html>\r");
+				write(cnfd, sendbuf, strlen(buf)+1);
 			}
 		}
 	} while (connection==1); 
