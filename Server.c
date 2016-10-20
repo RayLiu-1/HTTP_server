@@ -106,12 +106,28 @@ void *connection_handler(void *sockfd) {
 		char filepath[200];
 		char filename[100];
 		char HTTP[100];
-		if (strcmp(pch, "GET") == 0 ) {
-			pch = strtok(NULL, " ");
-			if (strlen(pch) == 0 || pch[0] == '/') {
-				strcpy(sendbuf, "HTTP/1.1 400 Bad Request\n");
+		char request[100];
+		strcpy(request, pch);
+		pch = strtok(NULL, " ");
+		strcpy(filename, pch);
+		pch = strtok(NULL, " ");
+		strcpy(HTTP, pch);
+		int connection = 0;
+		while (pch != NULL) {
+			pch = strtok(NULL, ": ");
+			if (strcmp(pch, "Connection") == 0) {
+				pch = strtok(NULL, ": ");
+				if (strcmp(pch, "Keep-alive") == 0) {
+					connection = 1;
+				}
+			}
+		}
+		if (strcmp(request, "GET") == 0 ) {
+			if (strlen(filename) == 0 || filename[0] != '/') {
+				strcpy(sendbuf, HTTP);
+				strcpy(sendbuf, " 400 Bad Request\n");
 				char error_message[400] = "<html><body>400 Bad Request Reason: Invalid URL:";
-				strcat(error_message, pch);
+				strcat(error_message, filename);
 				strcat(error_message, "\n</body></html>\n");
 				char connection[40] = "Connection: Close\r\n\r\n";
 				char length[40] = ""; 
@@ -125,11 +141,30 @@ void *connection_handler(void *sockfd) {
 				puts(sendbuf);
 				continue;
 			}
-			else if (strlen(pch) != 0 && pch[strlen(pch) - 1] == '/')
+			else if (strlen(filename) != 0 && pch[strlen(filename) - 1] == '/')
 			{
+				strcpy(sendbuf,"")
 				strcpy(filepath, DocumentRoot);
 				strcat(filepath, "/");
 				strcat(filepath, WebPage[0]);
+				FILE* fp = open(filepath, "r");
+				strcpy(sendbuf, HTTP);
+				strcpy(sendbuf, "200 OK\n");
+				char type[40] = "Content-Type: text/html\n";
+				strcpy(sendbuf, type);
+				char length[40] = "";
+				fseek(fp, 0, SEEK_END);
+				sprintf(length, "Content-Length: %d\n", ftell(fp));
+				rewind(fp);
+				if (connection == 1) {
+					strcpy(sendbuf, "Connection: Keep-alive");
+				}
+				strcpy(sendbuf, "\r\n\r\n");
+				write(cnfd, sendbuf, strlen(sendbuf) + 1);
+				memset(sendbuf, 0, BUFSIZE);
+				while (fgets(sendbuf, BUFSIZE, (FILE*)fp)) {
+					write(cnfd, sendbuf, BUFSIZE);
+				}
 			}
 			else{
 				/*strcpy(filepath, DocumentRoot);
@@ -151,7 +186,7 @@ void *connection_handler(void *sockfd) {
 				}
 			}
 		}
-	} while (1); 
+	} while (connection==1); 
 	
 	free(sockfd);
 	return 0;
