@@ -93,7 +93,7 @@ void *connection_handler(void *sockfd) {
 		//Send the message back to client
 		memset(buf, 0, BUFSIZE);
 		n = recv(cnfd, buf, BUFSIZE, 0);	
-		//puts(buf);
+		puts(buf);
 		/*while (n != 0) {
 			char newbuf[100] = "";
 			n = recv(cnfd, newbuf, 100, 0);
