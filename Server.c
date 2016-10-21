@@ -158,7 +158,7 @@ void *connection_handler(void *sockfd) {
 			puts("1");
 			content = strstr(buf, "\n\n");
 			if (content == NULL) {
-				put("NULL");
+				puts("NULL");
 			}
 			if (strlen(content) > 2) {
 				fwrite(content+2, 1, content-buf-2, fp);
