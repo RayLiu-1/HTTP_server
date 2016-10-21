@@ -136,7 +136,6 @@ void *connection_handler(void *sockfd) {
 			strcpy(HTTP, "HTTP/1.0");
 		if ((strcmp(request, "POST") == 0)) {
 			char content[BUFSIZE] = "";
-			n =
 				/*char * past = pch;
 				while (pch != NULL) {
 					pch = strtok(NULL,"\r\n\r\n");
