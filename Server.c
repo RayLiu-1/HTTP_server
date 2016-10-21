@@ -136,6 +136,7 @@ void *connection_handler(void *sockfd) {
 		if (pch1 != NULL) {
 			strcpy(filetype, pch1);
 		}
+		puts(pch);
 		pch = strtok(NULL, " \n\r");
 		puts("pass");
 		if(strcmp(pch,"HTTP/1.1")==0)
