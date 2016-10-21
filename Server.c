@@ -154,7 +154,8 @@ void *connection_handler(void *sockfd) {
 					}
 				}
 			}
-			char* content = strstr(buf, "\n\n");
+			char* content = buf;
+			content = strstr(buf, "\n\n");
 			printf("%d", content - buf);
 			if (strlen(content) > 2) {
 				fwrite(content+2, 1, content-buf-2, fp);
