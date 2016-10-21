@@ -157,6 +157,9 @@ void *connection_handler(void *sockfd) {
 			char* content = buf;			
 			puts("1");
 			content = strstr(buf, "\n\n");
+			if (content == NULL) {
+				put("NULL");
+			}
 			if (strlen(content) > 2) {
 				fwrite(content+2, 1, content-buf-2, fp);
 				recv_size -= content - buf - 2;
