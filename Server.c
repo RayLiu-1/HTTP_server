@@ -130,7 +130,7 @@ void *connection_handler(void *sockfd) {
 		strcpy(wholefilename, filename);
 		pch = strtok(wholefilename, ".");
 		pch = strtok(NULL, ".");
-		char filetype[20] ="";
+		char filetype[100] ="";
 		if (pch != NULL) {
 			strcpy(filetype, pch);
 		}
