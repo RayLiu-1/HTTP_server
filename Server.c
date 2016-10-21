@@ -104,7 +104,8 @@ void *connection_handler(void *sockfd) {
 		if (n == -1) {
 			puts("timeout");
 			pch = strtok(lastbuf," ");
-			connection = 3;
+			connection = 0;
+			break;
 		}
 		else {
 			strcpy(lastbuf, buf);
@@ -140,7 +141,7 @@ void *connection_handler(void *sockfd) {
 			strcat(filepath, filename);
 			FILE *fp = fopen(filepath, "w");
 			
-			int recv_size = 1;
+			int recv_size = 0;
 			while (pch != NULL) {
 				pch = strtok(NULL, ": \n\r");
 				if (pch != NULL)
@@ -152,6 +153,11 @@ void *connection_handler(void *sockfd) {
 						}
 					}
 				}
+			}
+			char* content = strstr(buf, "\n\n");
+			if (strlen(content) > 2) {
+				fwrite(content+2, 1, content-buf-2, fp);
+				recv_size -= content - buf - 2;
 			}
 			while(recv_size >0){
 				n = recv(cnfd, buf, BUFSIZE, 0);
