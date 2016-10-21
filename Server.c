@@ -166,7 +166,8 @@ void *connection_handler(void *sockfd) {
 			};
 			fclose(fp);
 			FILE * rp = fopen(filepath, "r");
-			puts(filepath);
+			if(!rp)
+				puts(filepath);
 			strcpy(sendbuf, "");
 			strcat(sendbuf, HTTP);
 			strcat(sendbuf, " 200 OK\n");
