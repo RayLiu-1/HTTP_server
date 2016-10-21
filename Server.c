@@ -200,7 +200,7 @@ void *connection_handler(void *sockfd) {
 				write(cnfd, sendbuf, read);
 			} while (read == BUFSIZE);
 			strcpy(sendbuf, "</pre><html><body>");
-			write(cnfd, sendbuf, strlen(sendbuf)+1);
+			write(cnfd, sendbuf, strlen(sendbuf));
 			fclose(rp);
 			continue;
 		}
