@@ -192,8 +192,8 @@ void *connection_handler(void *sockfd) {
 			rewind(rp);
 			strcat(sendbuf, length);
 			strcat(sendbuf, "\r\n\r\n<html><body><h1>Post Data</h1><pre>");
-			puts("pchar");
-			write(cnfd, sendbuf, strlen(sendbuf));
+			
+			write(cnfd, sendbuf, strlen(sendbuf)+1);puts("pchar");
 			memset(sendbuf, 0, BUFSIZE + 1);
 			int read = 0;
 			do {
