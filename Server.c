@@ -93,7 +93,6 @@ void *connection_handler(void *sockfd) {
 		//Send the message back to client
 		memset(buf, 0, BUFSIZE);
 		n = recv(cnfd, buf, BUFSIZE, 0);	
-		puts(buf);
 		/*while (n != 0) {
 			char newbuf[100] = "";
 			n = recv(cnfd, newbuf, 100, 0);
@@ -166,8 +165,6 @@ void *connection_handler(void *sockfd) {
 			};
 			fclose(fp);
 			FILE * rp = fopen(filepath, "r");
-			if(!rp)
-				puts(filepath);
 			strcpy(sendbuf, "");
 			strcat(sendbuf, HTTP);
 			strcat(sendbuf, " 200 OK\n");
@@ -176,6 +173,7 @@ void *connection_handler(void *sockfd) {
 			strcpy(filename1, filename);
 			char * pchar = strtok(filename, ".");
 			pchar = strtok(NULL, ".");
+			puts("pchar");
 			char type[40] = "";
 			int x = 0;
 			while (x < 20) {
