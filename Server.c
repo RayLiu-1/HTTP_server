@@ -155,15 +155,10 @@ void *connection_handler(void *sockfd) {
 			}
 			char* content = lastbuf;
 			content = strstr(lastbuf, "\r\n\r\n");
-			
-			if (content != NULL)
-			{
-				puts(content);
+			if (strlen(content) > 4) {
+				fwrite(content+4, 1, strlen(content)-4, fp);
+				recv_size -= (strlen(content) - 4);
 			}
-			if (strlen(content) > 2) {
-				fwrite(content+2, 1, strlen(content)-2, fp);
-				recv_size -= strlen(content) - 2;
-			}puts("duancuowu");
 			while(recv_size >0){
 				n = recv(cnfd, buf, BUFSIZE, 0);
 				fwrite(buf, 1, n, fp);
