@@ -126,7 +126,7 @@ void *connection_handler(void *sockfd) {
 		pch = strtok(NULL, " \n\r");
 		if (pch != NULL)
 			strcpy(filename, pch);
-		char wholefilename[20] = "";
+		char wholefilename[100] = "";
 		strcpy(wholefilename, filename);
 		pch = strtok(wholefilename, ".");
 		pch = strtok(NULL, ".");
