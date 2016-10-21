@@ -182,12 +182,10 @@ void *connection_handler(void *sockfd) {
 				printf("unable to set socket");
 			}
 		}
-		
+		puts("HTTP");
 		if (strcmp(request, "GET") == 0 ) {
 			if (strlen(filename) != 0 && (strlen(filetype)==0)&& (strcmp(HTTP, "HTTP/1.1") == 0 || strcmp(HTTP, "HTTP/1.0") == 0))
 			{
-			puts("pass");
-
 				memset(sendbuf, 0, BUFSIZE + 1);
 				strcpy(filepath, DocumentRoot);
 				strcat(filepath, filename);
