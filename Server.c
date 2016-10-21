@@ -93,7 +93,7 @@ void *connection_handler(void *sockfd) {
 		//Send the message back to client
 		memset(buf, 0, BUFSIZE);
 		n = recv(cnfd, buf, BUFSIZE, 0);	
-		puts(buf);
+		//puts(buf);
 		/*while (n != 0) {
 			char newbuf[100] = "";
 			n = recv(cnfd, newbuf, 100, 0);
@@ -129,25 +129,30 @@ void *connection_handler(void *sockfd) {
 			strcpy(filename, pch);
 		char wholefilename[100] = "";
 		strcpy(wholefilename, filename);
-		
-		puts(pch);
 		pch = strtok(NULL, " \n\r");
-		puts(pch);
 		if(strcmp(pch,"HTTP/1.1")==0)
 			strcpy(HTTP, "HTTP/1.1");
 		else if(strcmp(pch, "HTTP/1.0") == 0)
 			strcpy(HTTP, "HTTP/1.0");
-		/*if ((strcmp(request, "POST") == 0)) {
+		if ((strcmp(request, "POST") == 0)) {
 			char content[BUFSIZE] = "";
-			char * past;
-			while (pch != NULL) {
-				past = pch;
-				pch = strtok(NULL,"\r\n\r\n");
-			}
-			strcpy(content,past);
-			strcat(file
-			File *fp = open(filename,
-		}*/
+			n =
+				/*char * past = pch;
+				while (pch != NULL) {
+					pch = strtok(NULL,"\r\n\r\n");
+					past = pch;
+				}
+				strcpy(content,pch);
+				strcat(filepath, filename);
+				File *fp = open(filepath, "w");
+				fwrite(content, 1, strlen(content) + 1, fp);*/
+				while (n = recv(cnfd, buf, BUFSIZE, 0) > 0)
+					//fwrite(buf, 1, n, fp);
+					puts(buf);
+			/*fclose(fp);
+			File * rp = open(filepath, "r");*/
+
+		}
 		if (connection != 3)
 		{
 			while (pch != NULL) {
