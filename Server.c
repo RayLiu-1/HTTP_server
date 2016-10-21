@@ -93,6 +93,7 @@ void *connection_handler(void *sockfd) {
 		//Send the message back to client
 		memset(buf, 0, BUFSIZE);
 		n = recv(cnfd, buf, BUFSIZE, 0);	
+		puts(buf);
 		/*while (n != 0) {
 			char newbuf[100] = "";
 			n = recv(cnfd, newbuf, 100, 0);
@@ -131,7 +132,7 @@ void *connection_handler(void *sockfd) {
 		pch = strtok(wholefilename, ". ");
 		if(strlen(pch)!=0)
 			pch = strtok(NULL, ". ");
-		puts("pass");
+		
 		char filetype[100] ="";
 		if (pch != NULL) {
 			strcpy(filetype, pch);
@@ -185,6 +186,7 @@ void *connection_handler(void *sockfd) {
 				printf("unable to set socket");
 			}
 		}
+		puts("pass");
 		if (strcmp(request, "GET") == 0 ) {
 			if (strlen(filename) != 0 && (strlen(filetype)==0)&& (strcmp(HTTP, "HTTP/1.1") == 0 || strcmp(HTTP, "HTTP/1.0") == 0))
 			{
