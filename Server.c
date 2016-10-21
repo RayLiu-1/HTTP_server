@@ -129,13 +129,7 @@ void *connection_handler(void *sockfd) {
 			strcpy(filename, pch);
 		char wholefilename[100] = "";
 		strcpy(wholefilename, filename);
-		char* pch1 = strtok(wholefilename, ". ");
-		if(strlen(pch1)!=0)
-			pch1 = strtok(NULL, ". ");
-		char filetype[100] ="";
-		if (pch1 != NULL) {
-			strcpy(filetype, pch1);
-		}
+		
 		puts(pch);
 		pch = strtok(NULL, " \n\r");
 		puts(pch);
@@ -186,7 +180,13 @@ void *connection_handler(void *sockfd) {
 				printf("unable to set socket");
 			}
 		}
-		
+		char* pch1 = strtok(wholefilename, ". ");
+		if(strlen(pch1)!=0)
+			pch1 = strtok(NULL, ". ");
+		char filetype[100] ="";
+		if (pch1 != NULL) {
+			strcpy(filetype, pch1);
+		}
 		if (strcmp(request, "GET") == 0 ) {
 			if (strlen(filename) != 0 && (strlen(filetype)==0)&& (strcmp(HTTP, "HTTP/1.1") == 0 || strcmp(HTTP, "HTTP/1.0") == 0))
 			{
