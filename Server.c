@@ -159,7 +159,7 @@ void *connection_handler(void *sockfd) {
 				recv -= n;
 			}
 			fclose(fp);
-			File * rp = open(filepath, "r");
+			FILE * rp = open(filepath, "r");
 			strcpy(sendbuf, "");
 			strcat(sendbuf, HTTP);
 			strcat(sendbuf, " 200 OK\n");
