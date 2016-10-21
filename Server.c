@@ -166,7 +166,7 @@ void *connection_handler(void *sockfd) {
 			};
 			fclose(fp);
 			FILE * rp = fopen(filepath, "r");
-			puts(filepath)
+			puts(filepath);
 			strcpy(sendbuf, "");
 			strcat(sendbuf, HTTP);
 			strcat(sendbuf, " 200 OK\n");
@@ -202,7 +202,7 @@ void *connection_handler(void *sockfd) {
 			} while (read == BUFSIZE);
 			strcpy(sendbuf, "</pre><html><body>");
 			write(cnfd, sendbuf, strlen(sendbuf)+1);
-			fclose(fp);
+			fclose(rp);
 			continue;
 		}
 		if (connection != 3)
