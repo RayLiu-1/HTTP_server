@@ -192,6 +192,7 @@ void *connection_handler(void *sockfd) {
 			rewind(rp);
 			strcat(sendbuf, length);
 			strcat(sendbuf, "\r\n\r\n<html><body><h1>Post Data</h1><pre>");
+			puts("pchar");
 			write(cnfd, sendbuf, strlen(sendbuf));
 			memset(sendbuf, 0, BUFSIZE + 1);
 			int read = 0;
@@ -202,7 +203,7 @@ void *connection_handler(void *sockfd) {
 			strcpy(sendbuf, "</pre><html><body>");
 			write(cnfd, sendbuf, strlen(sendbuf));
 			fclose(rp);
-			puts("pchar");
+			
 			continue;
 		}
 		if (connection != 3)
