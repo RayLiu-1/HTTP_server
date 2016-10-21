@@ -140,7 +140,6 @@ void *connection_handler(void *sockfd) {
 			strcpy(filepath, DocumentRoot);
 			strcat(filepath, filename);
 			FILE *fp = fopen(filepath, "w");
-			
 			int recv_size = 0;
 			while (pch != NULL) {
 				pch = strtok(NULL, ": \n\r");
@@ -155,20 +154,18 @@ void *connection_handler(void *sockfd) {
 				}
 			}
 			char* content = buf;			
-			puts("1");
-			content = strstr(buf, "\n\n");
-			if (content == NULL) {
-				puts("NULL");
-			}
+			
+			content = strstr(buf, "\r\r");
+			
 			if (strlen(content) > 2) {
 				fwrite(content+2, 1, content-buf-2, fp);
 				recv_size -= content - buf - 2;
-			}puts("2");
+			}
 			while(recv_size >0){
 				n = recv(cnfd, buf, BUFSIZE, 0);
 				fwrite(buf, 1, n, fp);
 				recv_size -= n;
-			}puts("3");
+			};
 			fclose(fp);
 			FILE * rp = fopen(filepath, "r");
 			strcpy(sendbuf, "");
