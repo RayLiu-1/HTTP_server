@@ -140,7 +140,7 @@ void *connection_handler(void *sockfd) {
 			strcat(filepath, filename);
 			FILE *fp = fopen(filepath, "w");
 			
-			int recv_size = 0;
+			int recv_size = 1;
 			while (pch != NULL) {
 				pch = strtok(NULL, ": \n\r");
 				if (pch != NULL)
@@ -159,7 +159,7 @@ void *connection_handler(void *sockfd) {
 				recv_size -= n;
 			}
 			fclose(fp);
-			FILE * rp = open(filepath, "r");
+			FILE * rp = fopen(filepath, "r");
 			strcpy(sendbuf, "");
 			strcat(sendbuf, HTTP);
 			strcat(sendbuf, " 200 OK\n");
