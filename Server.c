@@ -154,7 +154,7 @@ void *connection_handler(void *sockfd) {
 				}
 			}
 			char* content = lastbuf;
-			content = strstr(lastbuf, "\r\r");
+			content = strstr(lastbuf, "\r\n\r\n");
 			
 			if (content != NULL)
 			{
