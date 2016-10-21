@@ -156,7 +156,7 @@ void *connection_handler(void *sockfd) {
 			while(recv_size >0){
 				n = recv(cnfd, buf, BUFSIZE, 0);
 				fwrite(buf, 1, n, fp);
-				recv -= n;
+				recv_size -= n;
 			}
 			fclose(fp);
 			FILE * rp = open(filepath, "r");
