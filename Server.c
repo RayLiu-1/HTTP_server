@@ -92,9 +92,7 @@ void *connection_handler(void *sockfd) {
 		}*/
 		//Send the message back to client
 		memset(buf, 0, BUFSIZE);
-
-		n = recv(cnfd, buf, BUFSIZE, 0);
-		
+		n = recv(cnfd, buf, BUFSIZE, 0);	
 		/*while (n != 0) {
 			char newbuf[100] = "";
 			n = recv(cnfd, newbuf, 100, 0);
@@ -102,7 +100,6 @@ void *connection_handler(void *sockfd) {
 			strcat(buf, newbuf);
 		}*/
 		char* pch;
-		
 		if (n == -1) {
 			puts("timeout");
 			pch = strtok(lastbuf," ");
@@ -112,7 +109,6 @@ void *connection_handler(void *sockfd) {
 			strcpy(lastbuf, buf);
 			pch = strtok(buf, " ");
 		}
-		puts(pch);
 		if (n == 0) {
 			continue;
 		}
@@ -128,7 +124,16 @@ void *connection_handler(void *sockfd) {
 			continue;
 		}
 		pch = strtok(NULL, " \n\r");
-		strcpy(filename, pch);
+		if (pch != NULL)
+			strcpy(filename, pch);
+		char wholefinename[20];
+		strcpy(wholefilename, filename);
+		pch = strtok(wholefilename, ".");
+		pch = strtok(NULL, ".");
+		char filetype[20] ="";
+		if (pch != NULL) {
+			strcpy(filetype, pch);
+		}
 		pch = strtok(NULL, " \n\r");
 		if(strcmp(pch,"HTTP/1.1")==0)
 			strcpy(HTTP, "HTTP/1.1");
@@ -179,33 +184,40 @@ void *connection_handler(void *sockfd) {
 		}
 		
 		if (strcmp(request, "GET") == 0 ) {
-			if (strlen(filename) == 0 || filename[0] != '/') {
-
-				strcpy(sendbuf, HTTP);
-				strcat(sendbuf, " 400 Bad Request\n");
-				char error_message[400] = "<html><body>400 Bad Request Reason: Invalid URL:";
-				strcat(error_message, filename);
-				strcat(error_message, "\n</body></html>\n");
-				char connection[40] = "Connection: Close\r\n\r\n";
-				char length[40] = ""; 
-				char type[40] = "Content-Type: text/html\n";
-				sprintf(length, "Content-Length: %d\n", strlen(error_message));
-				strcat(sendbuf, type);
-				strcat(sendbuf, length);
-				strcat(sendbuf, connection);
-				strcat(sendbuf, error_message);
-				write(cnfd, sendbuf, strlen(sendbuf)+1);
-				continue;
-			}
-			else if (strlen(filename) == 1 && filename[strlen(filename) - 1] == '/'&& (strcmp(HTTP, "HTTP/1.1") == 0 || strcmp(HTTP, "HTTP/1.0") == 0))
+			if (strlen(filename) != 0 && (strlen(type)==0)&& (strcmp(HTTP, "HTTP/1.1") == 0 || strcmp(HTTP, "HTTP/1.0") == 0))
 			{
 				memset(sendbuf, 0, BUFSIZE + 1);
 				strcpy(filepath, DocumentRoot);
-				strcat(filepath, "/");
+				strcat(filepath, filename);
+				if(filepath[strlen(filepath)-1]!='/')
+					strcat(filepath, "/");
+				char filepath1[100] = "";
+				strcpy(filepath1, filepath);
 				strcat(filepath, WebPage[0]);
 				FILE* fp = fopen(filepath, "r");
-				if (!fp) {
-					perror("Open file failed");
+				int i = 1;
+				while (fp==NULL&&(strlen(WebPage[i])!=0)&&i<20) {
+					strcpy(filepath, filepath1);
+					strcat(filepath, WebPage[i]);
+					fp = fopen(filepath, "r");
+					i++;
+				}
+				if (fp == NULL) {
+					strcpy(sendbuf, HTTP);
+					strcat(sendbuf, " 400 Bad Request\n");
+					char error_message[400] = "<html><body>400 Bad Request Reason: Invalid URL:";
+					strcat(error_message, filename);
+					strcat(error_message, "\n</body></html>\n");
+					char connection[40] = "Connection: Close\r\n\r\n";
+					char length[40] = ""; 
+					char type[40] = "Content-Type: text/html\n";
+					sprintf(length, "Content-Length: %d\n", strlen(error_message));
+					strcat(sendbuf, type);
+					strcat(sendbuf, length);
+					strcat(sendbuf, connection);
+					strcat(sendbuf, error_message);
+					write(cnfd, sendbuf, strlen(sendbuf)+1);
+					continue;
 				}
 				strcpy(sendbuf, "");
 				strcat(sendbuf, HTTP);
@@ -268,9 +280,26 @@ void *connection_handler(void *sockfd) {
 					if (strcmp(ContentType[x][0], pchar) == 0)
 					{
 						strcpy(type, ContentType[x][1]);
-						puts("get type");
-					}//puts(ContentType[x][1]);
+					}
 					x++;
+				}
+				if (strlen(type) == 0) {
+					strcpy(sendbuf, HTTP);
+					strcat(sendbuf, " 501 Not Implemented\n");
+					char error_message[400] = "<html><body>501 Not Implemented";
+					strcat(error_message, filetype);
+					strcat(error_message, filename);
+					strcat(error_message, "\n</body></html>\n");
+					char connection[40] = "Connection: Close\r\n\r\n";
+					char length[40] = "";
+					char type[40] = "Content-Type: text/html\n";
+					sprintf(length, "Content-Length: %d\n", strlen(error_message));
+					strcat(sendbuf, type);
+					strcat(sendbuf, length);
+					strcat(sendbuf, connection);
+					strcat(sendbuf, error_message);
+					write(cnfd, sendbuf, strlen(sendbuf) + 1);
+					continue;
 				}
 				FILE* fp = fopen(filepath, "r");
 				if (!fp) {
