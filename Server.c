@@ -152,6 +152,7 @@ void *connection_handler(void *sockfd) {
 			strcat(file
 			File *fp = open(filename,
 		}*/
+		puts("pass");
 		if (connection != 3)
 		{
 			while (pch != NULL) {
