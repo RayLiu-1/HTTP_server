@@ -129,22 +129,18 @@ void *connection_handler(void *sockfd) {
 			strcpy(filename, pch);
 		char wholefilename[100] = "";
 		strcpy(wholefilename, filename);
-		pch = strtok(wholefilename, ". ");
-		if(strlen(pch)!=0)
-			pch = strtok(NULL, ". ");
-		puts("0");
+		char pch1 = strtok(wholefilename, ". ");
+		if(strlen(pch1)!=0)
+			pch1 = strtok(NULL, ". ");
 		char filetype[100] ="";
-		if (pch != NULL) {
-			strcpy(filetype, pch);
+		if (pch1 != NULL) {
+			strcpy(filetype, pch1);
 		}
-		puts("1");
 		pch = strtok(NULL, " \n\r");
-		puts("pass");
 		if(strcmp(pch,"HTTP/1.1")==0)
 			strcpy(HTTP, "HTTP/1.1");
 		else if(strcmp(pch, "HTTP/1.0") == 0)
 			strcpy(HTTP, "HTTP/1.0");
-		puts("2");
 		/*if ((strcmp(request, "POST") == 0)) {
 			char content[BUFSIZE] = "";
 			char * past;
