@@ -164,6 +164,19 @@ void *connection_handler(void *sockfd) {
 			strcat(sendbuf, HTTP);
 			strcat(sendbuf, " 200 OK\n");
 			strcat(sendbuf, "Content-Type: ");
+			char filename1[40];
+			strcpy(filename1, filename);
+			char * pchar = strtok(filename, ".");
+			pchar = strtok(NULL, ".");
+			char type[40] = "";
+			int x = 0;
+			while (x < 20) {
+				if (strcmp(ContentType[x][0], pchar) == 0)
+				{
+					strcpy(type, ContentType[x][1]);
+				}
+				x++;
+			}
 			strcat(sendbuf, type);
 			strcat(sendbuf, "\n");
 			char length[40] = "";
@@ -180,7 +193,7 @@ void *connection_handler(void *sockfd) {
 				read = fread(sendbuf, 1, BUFSIZE, (FILE *)rp);
 				write(cnfd, sendbuf, read);
 			} while (read == BUFSIZE);
-			strcpy(sendbuf,"</pre><html><body>")
+			strcpy(sendbuf, "</pre><html><body>");
 			write(cnfd, sendbuf, strlen(sendbuf)+1);
 			fclose(fp);
 			continue;
