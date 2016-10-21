@@ -135,20 +135,55 @@ void *connection_handler(void *sockfd) {
 		else if(strcmp(pch, "HTTP/1.0") == 0)
 			strcpy(HTTP, "HTTP/1.0");
 		if ((strcmp(request, "POST") == 0)) {
-			char content[BUFSIZE] = "";
-				char * past = pch;
-				while (pch != NULL) {
-					pch = strtok(NULL,"\r\n\r\n");
-					past = pch;
+			memset(sendbuf, 0, BUFSIZE + 1);
+			strcpy(filepath, DocumentRoot);
+			strcat(filepath, filename);
+			FILE *fp = fopen(filepath, "w");
+			
+			int recv_size = 0;
+			while (pch != NULL) {
+				pch = strtok(NULL, ": \n\r");
+				if (pch != NULL)
+				{
+					if (strcmp(pch, "Content-Length") == 0) {
+						pch = strtok(NULL, ": \r\n");
+						if (pch != NULL) {
+							recv_size = atoi(pch);
+						}
+					}
 				}
-				strcpy(content,pch);
-				strcat(filepath, filename);
-				FILE *fp = fopen(filepath, "w");
-				fwrite(content, 1, strlen(content) + 1, fp);
-				puts(content);
-				continue;
-			/*fclose(fp);
-			File * rp = open(filepath, "r");*/
+			}
+			while(recv_size >0){
+				n = recv(cnfd, buf, BUFSIZE, 0);
+				fwrite(buf, 1, n, fp);
+				recv -= n;
+			}
+			fclose(fp);
+			File * rp = open(filepath, "r");
+			strcpy(sendbuf, "");
+			strcat(sendbuf, HTTP);
+			strcat(sendbuf, " 200 OK\n");
+			strcat(sendbuf, "Content-Type: ");
+			strcat(sendbuf, type);
+			strcat(sendbuf, "\n");
+			char length[40] = "";
+			fseek(rp, 0, SEEK_END);
+			int filelen = (int)ftell(rp);
+			sprintf(length, "Content-Length: %d\n", filelen+64);
+			rewind(rp);
+			strcat(sendbuf, length);
+			strcat(sendbuf, "\r\n\r\n<html><body><h1>Post Data</h1><pre>");
+			write(cnfd, sendbuf, strlen(sendbuf));
+			memset(sendbuf, 0, BUFSIZE + 1);
+			int read = 0;
+			do {
+				read = fread(sendbuf, 1, BUFSIZE, (FILE *)rp);
+				write(cnfd, sendbuf, read);
+			} while (read == BUFSIZE);
+			strcpy(sendbuf,"</pre><html><body>")
+			write(cnfd, sendbuf, strlen(sendbuf)+1);
+			fclose(fp);
+			continue;
 		}
 		if (connection != 3)
 		{
