@@ -126,7 +126,7 @@ void *connection_handler(void *sockfd) {
 		pch = strtok(NULL, " \n\r");
 		if (pch != NULL)
 			strcpy(filename, pch);
-		char wholefinename[20];
+		char wholefinename[20] = "";
 		strcpy(wholefilename, filename);
 		pch = strtok(wholefilename, ".");
 		pch = strtok(NULL, ".");
@@ -184,7 +184,7 @@ void *connection_handler(void *sockfd) {
 		}
 		
 		if (strcmp(request, "GET") == 0 ) {
-			if (strlen(filename) != 0 && (strlen(type)==0)&& (strcmp(HTTP, "HTTP/1.1") == 0 || strcmp(HTTP, "HTTP/1.0") == 0))
+			if (strlen(filename) != 0 && (strlen(filetype)==0)&& (strcmp(HTTP, "HTTP/1.1") == 0 || strcmp(HTTP, "HTTP/1.0") == 0))
 			{
 				memset(sendbuf, 0, BUFSIZE + 1);
 				strcpy(filepath, DocumentRoot);
