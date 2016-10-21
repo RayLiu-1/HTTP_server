@@ -136,7 +136,7 @@ void *connection_handler(void *sockfd) {
 			strcpy(HTTP, "HTTP/1.0");
 		if ((strcmp(request, "POST") == 0)) {
 			char content[BUFSIZE] = "";
-				/*char * past = pch;
+				char * past = pch;
 				while (pch != NULL) {
 					pch = strtok(NULL,"\r\n\r\n");
 					past = pch;
@@ -144,10 +144,8 @@ void *connection_handler(void *sockfd) {
 				strcpy(content,pch);
 				strcat(filepath, filename);
 				File *fp = open(filepath, "w");
-				fwrite(content, 1, strlen(content) + 1, fp);*/
-				while (n = recv(cnfd, buf, BUFSIZE, 0) > 0)
-					//fwrite(buf, 1, n, fp);
-					puts(buf);
+				fwrite(content, 1, strlen(content) + 1, fp);
+				puts(content);
 				continue;
 			/*fclose(fp);
 			File * rp = open(filepath, "r");*/
