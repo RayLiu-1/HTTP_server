@@ -154,7 +154,7 @@ void *connection_handler(void *sockfd) {
 				}
 			}
 			char* content = lastbuf;
-			content = strstr(lastbuf, "\n\n");
+			content = strstr(lastbuf, "\n");
 			
 			if (content != NULL)
 			{
