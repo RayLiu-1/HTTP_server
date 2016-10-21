@@ -131,12 +131,12 @@ void *connection_handler(void *sockfd) {
 		pch = strtok(wholefilename, ". ");
 		if(strlen(pch)!=0)
 			pch = strtok(NULL, ". ");
-		
+		puts("pass");
 		char filetype[100] ="";
 		if (pch != NULL) {
 			strcpy(filetype, pch);
 		}
-		puts("pass");
+		
 		pch = strtok(NULL, " \n\r");
 		if(strcmp(pch,"HTTP/1.1")==0)
 			strcpy(HTTP, "HTTP/1.1");
