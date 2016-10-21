@@ -173,7 +173,7 @@ void *connection_handler(void *sockfd) {
 			strcpy(filename1, filename);
 			char * pchar = strtok(filename, ".");
 			pchar = strtok(NULL, ".");
-			puts("pchar");
+			
 			char type[40] = "";
 			int x = 0;
 			while (x < 20) {
@@ -202,6 +202,7 @@ void *connection_handler(void *sockfd) {
 			strcpy(sendbuf, "</pre><html><body>");
 			write(cnfd, sendbuf, strlen(sendbuf));
 			fclose(rp);
+			puts("pchar");
 			continue;
 		}
 		if (connection != 3)
