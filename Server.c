@@ -128,11 +128,8 @@ void *connection_handler(void *sockfd) {
 			strcpy(filename, pch);
 		char wholefilename[100] = "";
 		strcpy(wholefilename, filename);
-		
 		pch = strtok(wholefilename, ". ");
 		pch = strtok(NULL, ". ");
-		puts("pass");
-
 		char filetype[100] ="";
 		if (pch != NULL) {
 			strcpy(filetype, pch);
@@ -189,6 +186,8 @@ void *connection_handler(void *sockfd) {
 		if (strcmp(request, "GET") == 0 ) {
 			if (strlen(filename) != 0 && (strlen(filetype)==0)&& (strcmp(HTTP, "HTTP/1.1") == 0 || strcmp(HTTP, "HTTP/1.0") == 0))
 			{
+			puts("pass");
+
 				memset(sendbuf, 0, BUFSIZE + 1);
 				strcpy(filepath, DocumentRoot);
 				strcat(filepath, filename);
