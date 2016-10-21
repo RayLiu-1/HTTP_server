@@ -143,7 +143,7 @@ void *connection_handler(void *sockfd) {
 				}
 				strcpy(content,pch);
 				strcat(filepath, filename);
-				File *fp = open(filepath, "w");
+				FILE *fp = open(filepath, "w");
 				fwrite(content, 1, strlen(content) + 1, fp);
 				puts(content);
 				continue;
